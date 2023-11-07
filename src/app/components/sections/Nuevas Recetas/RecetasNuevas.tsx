@@ -1,0 +1,29 @@
+import React from "react";
+import RecetasNuevasSwiper from "./RecetasNuevasSwiper";
+import { Lobster } from "next/font/google";
+
+const lobster = Lobster({ weight: "400", preload: false });
+
+const RecetasNuevas = () => {
+  return (
+    <div>
+      <div className="text-center md:text-start sm:px-24">
+        <div className={lobster.className}>
+          <h1 className="text-4xl sm:text-5xl pt-2 text-black font-bold">
+            Recetas Nuevas
+          </h1>
+        </div>
+        <p>
+          <span className="text-lg sm:text-xl text-gray-400 font-semibold ">
+            Descubre las ultimas recetas publicadas
+          </span>
+        </p>
+      </div>
+      <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
+        <RecetasNuevasSwiper />
+      </div>
+    </div>
+  );
+};
+
+export default RecetasNuevas;
