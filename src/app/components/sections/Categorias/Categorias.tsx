@@ -4,51 +4,19 @@ import { Lobster } from "next/font/google";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
+import { List } from "@/libs/categorias";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
 interface Props {
-  id: number;
+  id: string;
   img: string;
   title: string;
 }
 
-const List = [
-  {
-    id: 1,
-    title: "Asado y Parrilla",
-    img: "/asado1.png",
-  },
-  {
-    id: 2,
-    title: "Pastas",
-    img: "/pasta1.jpeg",
-  },
-  {
-    id: 3,
-    title: "Milanesas",
-    img: "/mila.jpeg",
-  },
-  {
-    id: 4,
-    title: "Pizzas y Empanadas",
-    img: "/pizza.webp",
-  },
-  {
-    id: 5,
-    title: "Guisos y Estofados",
-    img: "/guiso1.jpeg",
-  },
-  {
-    id: 6,
-    title: "Otras Recetas",
-    img: "/otro.jpeg",
-  },
-];
-
 const Categorias = () => {
   return (
-    <div>
+    <div id="categoriaId">
       <div className="mt-10 sm:mt-16 text-center md:text-start sm:px-24">
         <div className={lobster.className}>
           <h1 className="text-4xl sm:text-5xl pt-2 text-black font-bold">
@@ -70,7 +38,6 @@ const Categorias = () => {
                 key={index}
                 isPressable
                 className="rounded-full"
-               
               >
                 <CardBody className="overflow-visible p-0">
                   <Image
@@ -84,7 +51,7 @@ const Categorias = () => {
               </Card>
             </Link>
             <div className="flex justify-center mx-auto">
-              <span className="text-lg sm:text-xl text-center pt-1 sm:pt-4 text-gray-600 group-hover:text-black duration-250 font-semibold w-[100px]">
+              <span className="text-lg sm:text-xl text-center pt-1 sm:pt-4 text-gray-600 group-hover:text-black duration-250 font-semibold w-[130px]">
                 {item.title as Props["title"]}
               </span>
             </div>

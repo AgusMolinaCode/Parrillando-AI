@@ -25,7 +25,7 @@ const lobster = Lobster({ weight: "400", preload: false });
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Mis Recetas", "Recetas AI", "Lugares", "Recomendaciones"];
+  const menuItems = ["Mis Recetas", "Recetas AI", "Gastronomia", "Recomendaciones"];
 
   return (
     <Navbar
@@ -76,9 +76,9 @@ export default function Menu() {
               </Link>
             </DropdownItem>
 
-            <DropdownItem key="lugares">
-              <Link href="/lugares" className="text-black">
-                Lugares
+            <DropdownItem key="Gastronomia">
+              <Link href="/gastronomia" className="text-black">
+                Gastronomia
               </Link>
             </DropdownItem>
 
