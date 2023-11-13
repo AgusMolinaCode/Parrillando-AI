@@ -2,13 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  Modal,
-  ModalContent,
-  
-  useDisclosure,
-} from "@nextui-org/react";
-
+import Zoom from "react-medium-image-zoom";
+import './styles.css'
 
 const slides = [
   {
@@ -30,32 +25,19 @@ const slides = [
 ];
 
 const RecetaZoom = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   return (
     <div className="">
       <div>
-        <Image
-          src="/asado1.png"
-          alt="Picture of the author"
-          width={400}
-          height={400}
-          className="rounded-xl"
-          onClick={onOpen}
-        />
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
-            {(onClose) => (
-              <Image
-                src="/asado1.png"
-                alt="Picture of the author"
-                width={750}
-                height={750}
-                className="rounded-xl w-[800px] h-[800px]"
-              />
-            )}
-          </ModalContent>
-        </Modal>
+        <Zoom zoomMargin={30}>
+          <img
+            src="/asado1.png"
+            alt="Picture of the author"
+            width={500}
+            height={500}
+            className="rounded-xl cursor-pointer"
+          />
+        </Zoom>
+        
       </div>
     </div>
   );

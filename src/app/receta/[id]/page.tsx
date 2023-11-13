@@ -3,7 +3,6 @@ import RecetaArrow from "@/app/components/sections/Receta/RecetaArrow";
 import RecetaIngredientes from "@/app/components/sections/Receta/RecetaIngredientes";
 import RecetaProcedimiento from "@/app/components/sections/Receta/RecetaProcedimiento";
 import RecetaRecomendaciones from "@/app/components/sections/Receta/RecetaRecomendaciones";
-import RecetaSwiper from "@/app/components/sections/Receta/RecetaZoom";
 
 const page = () => {
   return (
