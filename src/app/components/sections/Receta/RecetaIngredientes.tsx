@@ -4,13 +4,18 @@ import RecetaZoom from "./RecetaZoom";
 
 const RecetaIngredientes = () => {
   return (
-    <div className="flex flex-wrap items-center justify-center mx-auto gap-5">
+    <div className="flex flex-wrap justify-center mx-auto gap-5">
       <div>
         <p className="text-semibold text-indigo-500 text-md underline">
           Milanesas y Hamburguesas
         </p>
 
         <h1 className="text-4xl sm:text-5xl font-thin">Hamburguesa de Carne</h1>
+        <h2 className="max-w-[500px] mt-5">
+          Deliciosa hamburguesa de carne casera, con un toque de salsa inglesa y
+          mostaza. Ideal para una rica cena en familia. Acompañala con papas y a
+          la parrilla.
+        </h2>
         <h2 className="text-lg sm:text-xl font-semibold pt-8 underline">
           INGREDIENTES:
         </h2>
@@ -28,8 +33,9 @@ const RecetaIngredientes = () => {
           </ul>
         </div>
       </div>
-
-      <RecetaZoom />
+      <div className="p-2">
+        <RecetaZoom />
+      </div>
     </div>
   );
 };

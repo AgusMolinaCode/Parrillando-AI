@@ -89,7 +89,7 @@
     image-rendering: high-quality;
     transform-origin: top left;
     transition: transform 0.3s;
-    border-radius: 20px;
+    border-radius: 10px;
   }
   @media (prefers-reduced-motion: reduce) {
     [data-rmiz-modal-overlay],
@@ -97,3 +97,4 @@
       transition-duration: 0.01ms !important;
     }
   }
+

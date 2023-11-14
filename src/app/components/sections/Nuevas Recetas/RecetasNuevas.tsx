@@ -19,7 +19,7 @@ const RecetasNuevas = () => {
           </span>
         </p>
       </div>
-      <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
+      <div className="md:px-20 2xl:px-60 pt-8 p-2">
         <RecetasNuevasSwiper />
       </div>
     </div>

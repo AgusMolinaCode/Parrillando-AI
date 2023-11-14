@@ -6,7 +6,7 @@ import RecetaRecomendaciones from "@/app/components/sections/Receta/RecetaRecome
 
 const page = () => {
   return (
-    <div className="px-2">
+    <div className="">
       <div className="bg-gradient-to-r from-red-100 via-orange-200 to-yellow-100 p-8">
         <h1 className="text-center text-3xl sm:text-6xl font-bold">
           Hamburguesa de Carne
@@ -23,7 +23,7 @@ const page = () => {
 
         
       </div>
-      <div className="px-2 pt-20 grid grid-flow-row md:grid-flow-col mx-auto justify-center gap-4 pb-20">
+      <div className="px-2 pt-8 sm:pt-20 grid grid-flow-row md:grid-flow-col mx-auto justify-center gap-4 pb-20">
         <RecetaProcedimiento />
         <RecetaRecomendaciones />
       </div>
