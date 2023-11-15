@@ -1,6 +1,6 @@
 import React from "react";
 import { Lobster } from "next/font/google";
-import MejoresRecetasSwiper from "./MejoresRecetasSwiper";
+import SwiperReceta from "../../Swiper/SwiperReceta";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
@@ -20,7 +20,7 @@ const MejoresRecetas = () => {
         </p>
       </div>
       <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
-        <MejoresRecetasSwiper />
+        <SwiperReceta />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ interface Props {
 const Data = [
   {
     img: "/asado1.png",
-    title: "Asado de tira con salsa chimichurri",
+    title: "Asado de tira con chimichurri",
     subtitle:
       "Una deliciosa pieza de asado de tira con nuestra famosa salsa chimichurri casera.",
     stars: 4,
@@ -63,7 +63,7 @@ const Data = [
   },
 ];
 
-const RecetasNuevasSwiper = () => {
+const SwiperReceta = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Props[]>([]);
 
@@ -94,7 +94,7 @@ const RecetasNuevasSwiper = () => {
               slidesPerView: 1,
               spaceBetween: 50,
             },
-            920: {
+            600: {
               slidesPerView: 2,
               spaceBetween: 20,
             },
@@ -106,7 +106,7 @@ const RecetasNuevasSwiper = () => {
         >
           {data.map((item, index) => (
             <SwiperSlide className="" key={index}>
-              <Card className="w-full h-[320px] col-span-12 sm:col-span-5">
+              <Card className="w-full h-[250px] sm:h-[320px] col-span-12 sm:col-span-5">
                 <Image
                   alt={item.title}
                   className="z-0 w-full h-full hover:scale-105"
@@ -138,4 +138,4 @@ const RecetasNuevasSwiper = () => {
   );
 };
 
-export default RecetasNuevasSwiper;
+export default SwiperReceta;

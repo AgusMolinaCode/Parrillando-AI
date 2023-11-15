@@ -18,11 +18,15 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Lobster } from "next/font/google";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton,useUser } from "@clerk/nextjs";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
 export default function Menu() {
+
+  const {user} = useUser();
+  console.log(user?.id);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = ["Mis Recetas", "Recetas AI", "Gastronomia", "Recomendaciones"];

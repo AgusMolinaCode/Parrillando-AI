@@ -1,13 +1,13 @@
 import React from "react";
-import RecetasNuevasSwiper from "./RecetasNuevasSwiper";
 import { Lobster } from "next/font/google";
+import SwiperReceta from "../../Swiper/SwiperReceta";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
 const RecetasNuevas = () => {
   return (
-    <div>
-      <div className="text-center md:text-start sm:px-24">
+    <div className="">
+      <div className="mt-10 sm:mt-16 text-center md:text-start sm:px-24">
         <div className={lobster.className}>
           <h1 className="text-4xl sm:text-5xl pt-2 text-black font-bold">
             Recetas Nuevas
@@ -20,7 +20,7 @@ const RecetasNuevas = () => {
         </p>
       </div>
       <div className="md:px-20 2xl:px-60 pt-8 p-2">
-        <RecetasNuevasSwiper />
+        <SwiperReceta />
       </div>
     </div>
   );
