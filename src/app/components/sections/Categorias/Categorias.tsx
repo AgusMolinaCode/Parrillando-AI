@@ -4,7 +4,7 @@ import { Lobster } from "next/font/google";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
-import { List } from "@/libs/categorias";
+import { List } from "@/libs/interfaces/categorias";
 
 const lobster = Lobster({ weight: "400", preload: false });
 

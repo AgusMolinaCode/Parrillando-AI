@@ -2,7 +2,7 @@
 
 import CategoriaMenu from "@/app/components/sections/Categorias/CategoriaMenu/CategoriaMenu";
 import { useRouter } from "next/navigation";
-import { List } from "@/libs/categorias";
+import { List } from "@/libs/interfaces/categorias";
 
 interface Props {
   params: {

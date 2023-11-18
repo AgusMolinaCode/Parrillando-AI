@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 import { Prisma } from "@prisma/client";
+import { Ingredient } from "@/libs/interfaces/Ingredient";
+import { Step } from "@/libs/interfaces/Steps";
 
 interface Params {
   params: {
     id: string;
   };
-}
-
-interface Ingredient {
-  description: any;
-  name: string;
-  quantity: string;
-  id: number;
-  recipeId: number;
 }
 
 export async function GET(request: Request, { params }: Params) {
@@ -50,8 +44,6 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-// haremos similar a GET pero con PUT
-
 export async function PUT(request: Request, { params }: Params) {
   try {
     const {
@@ -76,32 +68,30 @@ export async function PUT(request: Request, { params }: Params) {
           set: photo,
         },
         likesCount,
-        // ingredients: {
-        //   upsert: ingredients.map((ingredient: Ingredient) => ({
-        //     where: { id: ingredient.id },
-        //     create: {
-        //       name: ingredient.name,
-        //       quantity: ingredient.quantity,
-        //       recipeId: Number(params.id),
-        //     },
-        //     update: {
-        //       name: ingredient.name,
-        //       quantity: ingredient.quantity,
-        //     },
-        //   })),
-        // },
-        // steps: {
-        //   upsert: steps.map((step: Step) => ({
-        //     where: { id: step.id },
-        //     create: {
-        //       description: step.description,
-        //       recipeId: Number(params.id),
-        //     },
-        //     update: {
-        //       description: step.description,
-        //     },
-        //   })),
-        // },
+        ingredients: {
+          upsert: ingredients.map((ingredient: Ingredient) => ({
+            where: { id: ingredient.id },
+            create: {
+              name: ingredient.name,
+              quantity: ingredient.quantity,
+            },
+            update: {
+              name: ingredient.name,
+              quantity: ingredient.quantity,
+            },
+          })),
+        },
+        steps: {
+          upsert: steps.map((step: Step) => ({
+            where: { id: step.id },
+            create: {
+              description: step.description,
+            },
+            update: {
+              description: step.description,
+            },
+          })),
+        },
       },
       include: {
         ingredients: true,
@@ -126,6 +116,49 @@ export async function PUT(request: Request, { params }: Params) {
       return NextResponse.json(
         {
           message: error.message,
+        },
+        { status: 500 }
+      );
+    }
+  }
+}
+
+export async function DELETE(request: Request, { params }: Params) {
+  try {
+    const id = Number(params.id);
+
+    // Eliminar ingredientes asociados
+    await prisma.ingredient.deleteMany({
+      where: {
+        recipeId: id,
+      },
+    });
+
+    // Eliminar pasos asociados
+    await prisma.step.deleteMany({
+      where: {
+        recipeId: id,
+      },
+    });
+
+    // Eliminar la receta
+    await prisma.recipe.delete({
+      where: {
+        id,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Receta y elementos asociados eliminados con éxito",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          message: 'No se encontro la receta',
         },
         { status: 500 }
       );
