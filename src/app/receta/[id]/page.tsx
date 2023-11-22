@@ -4,15 +4,42 @@ import RecetaIngredientes from "@/app/components/sections/Receta/RecetaIngredien
 import RecetaProcedimiento from "@/app/components/sections/Receta/RecetaProcedimiento";
 import RecetaRecomendaciones from "@/app/components/sections/Receta/RecetaRecomendaciones";
 import RecetaRelacionada from "@/app/components/sections/Receta/RecetaRelacionada";
+import { RecetaId } from "@/libs/interfaces/RecetaId";
+import { Metadata } from "next";
 
-const page = () => {
+interface Props {
+  params: {
+    id: string;
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata>{
+  const {title} = await getReceta( params.id );
+
+  return {
+    title: ` ${title}`,
+    description: `Receta de ${title}`,
+    keywords: [`${title}`,'receta', 'comida', 'cocina'],
+  }
+} 
+const getReceta = async (id: string): Promise<RecetaId> => {
+  const response = await fetch(`http://localhost:3000/api/recetas/${id}`);
+  const receta = await response.json();
+  return receta;
+}
+
+
+const page = async ({ params }: Props) => {
+  
+  const receta = await getReceta( params.id );
+  
+  
   return (
     <div className="">
       <div className="bg-gradient-to-r from-red-100 via-orange-200 to-yellow-100 p-8">
         <h1 className="text-center text-3xl sm:text-6xl font-bold">
-          Hamburguesa de Carne
+          {receta.title}
         </h1>
-        {/* //TODO agregar nombre dinamico */}
       </div>
 
       <RecetaArrow />
@@ -32,5 +59,6 @@ const page = () => {
     </div>
   );
 };
+
 
 export default page;

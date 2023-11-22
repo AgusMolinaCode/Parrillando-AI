@@ -25,7 +25,6 @@ const lobster = Lobster({ weight: "400", preload: false });
 export default function Menu() {
 
   const {user} = useUser();
-  console.log(user?.id);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

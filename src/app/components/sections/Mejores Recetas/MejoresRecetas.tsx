@@ -1,10 +1,19 @@
 import React from "react";
 import { Lobster } from "next/font/google";
 import SwiperReceta from "../../Swiper/SwiperReceta";
+import { Receta } from "@/libs/interfaces/Receta";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
-const MejoresRecetas = () => {
+async function getRecetas(): Promise<Receta[]> {
+  const response = await fetch("http://localhost:3000/api/recetas");
+  const recetas = await response.json();
+  return recetas;
+}
+
+const MejoresRecetas = async () => {
+  const recetas = await getRecetas();
+
   return (
     <div>
       <div className="mt-10 sm:mt-16 text-center md:text-start sm:px-24">
@@ -20,7 +29,7 @@ const MejoresRecetas = () => {
         </p>
       </div>
       <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
-        <SwiperReceta />
+        <SwiperReceta recetas={recetas} tipo="recomendadas" />
       </div>
     </div>
   );

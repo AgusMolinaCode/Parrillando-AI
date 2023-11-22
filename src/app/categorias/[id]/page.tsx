@@ -1,7 +1,4 @@
-"use client";
-
 import CategoriaMenu from "@/app/components/sections/Categorias/CategoriaMenu/CategoriaMenu";
-import { useRouter } from "next/navigation";
 import { List } from "@/libs/interfaces/categorias";
 
 interface Props {
@@ -10,13 +7,16 @@ interface Props {
   };
 }
 
+export const metadata = {
+  title: "Categorias",
+  description: "Categorias de recetas de cocina",
+};
+
 const Categorias = ({ params }: Props) => {
-  const router = useRouter();
   const categoria = List.find((item) => item.id === params.id);
 
   if (!categoria) {
-    router.push("/");
-    return null;
+    return <div className="text-3xl text-center text-black">Categoria no encontrada</div>;
   }
 
   return (

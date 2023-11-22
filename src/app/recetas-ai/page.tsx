@@ -1,6 +1,11 @@
 import React from "react";
 import Form from "../components/sections/AI/Form";
 
+export const metadata = {
+  title: "Recetas AI",
+  description: "Genera tus propias recetas con la ayuda de la IA",
+};
+
 const page = () => {
   return (
     <div className="min-h-screen">

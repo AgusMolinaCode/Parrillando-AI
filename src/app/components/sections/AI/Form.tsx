@@ -1,15 +1,20 @@
-"use client";
-
+'use client';
 import { useState, useCallback } from "react";
 import { useCompletion } from "ai/react";
 import { Button, Input, ScrollShadow } from "@nextui-org/react";
+import Image from "next/image";
 
 const Form = () => {
   const [content, setContent] = useState("");
+  const [copied, setCopied] = useState("");
+  const [isComplete, setIsComplete] = useState(false); // Bandera para indicar si la respuesta está completa
   const { complete, completion, isLoading, stop } = useCompletion({
     api: "/api/completion",
+    onFinish: (completion) => {
+      setIsComplete(true); // Establecer la bandera como verdadera cuando la respuesta está completa
+    }
   });
-
+  
   const checkAndPublish = useCallback(
     async (c: string) => {
       const completion = await complete(c);
@@ -19,6 +24,14 @@ const Form = () => {
     },
     [complete]
   );
+    
+  const handleCopy = () => {
+    setCopied(completion);
+    navigator.clipboard.writeText(completion);
+    setTimeout(() => {
+      setCopied("");
+    }, 2000);
+  };
 
   return (
     <div>
@@ -57,9 +70,22 @@ const Form = () => {
               Generar Receta
             </Button>
           )}
+          {isComplete && (
+            <div className="ml-5 flex gap-2 items-center" onClick={handleCopy}>
+              <Image
+                src={copied === completion ? "/check2.svg" : "/copy2.svg"}
+                alt="copy_icon"
+                width={20}
+                height={20}
+              />
+              <p className="font-outfit font-medium text-accent text-md">
+                {copied === completion ? "Copiado!" : "Copiar"}
+              </p>
+            </div>
+          )}
         </div>
         <div>
-          <div className="mx-4 md:mx-24 lg:mx-48 xl:mx-64 2xl:mx-80 mb-20 bg-orange-100/40 rounded-xl border border-gray-400">
+          <div className="mx-1 md:mx-24 lg:mx-48 xl:mx-64 2xl:mx-80 mb-20 bg-orange-100/40 rounded-xl border border-gray-400">
             <ScrollShadow className="max-h-[500px] sm:max-h-[600px]">
               {completion &&
                 completion.split("\n").map((line, index) => {

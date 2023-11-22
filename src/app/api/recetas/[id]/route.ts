@@ -11,7 +11,7 @@ interface Params {
 }
 
 export async function GET(request: Request, { params }: Params) {
-  console.log(params.id);
+  
   try {
     const recipe = await prisma.recipe.findFirst({
       where: {
@@ -47,6 +47,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function PUT(request: Request, { params }: Params) {
   try {
     const {
+      id,
       title,
       category,
       description,
@@ -80,6 +81,11 @@ export async function PUT(request: Request, { params }: Params) {
               quantity: ingredient.quantity,
             },
           })),
+          deleteMany: {
+            id: {
+              notIn: ingredients.map((ingredient: Ingredient) => ingredient.id),
+            },
+          },
         },
         steps: {
           upsert: steps.map((step: Step) => ({
@@ -91,6 +97,11 @@ export async function PUT(request: Request, { params }: Params) {
               description: step.description,
             },
           })),
+          deleteMany: {
+            id: {
+              notIn: steps.map((step: Step) => step.id),
+            },
+          },
         },
       },
       include: {
