@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from "react";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
@@ -12,33 +12,36 @@ import { Receta } from "@/libs/interfaces/Receta";
 
 interface SwiperRecetaProps {
   recetas: Receta[];
-  tipo: "nuevas" | "recomendadas" | "relacionadas";
+  tipo: "nuevas" | "recomendadas" | string;
 }
 
+
 const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
+
+
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     setLoading(false);
   }, []);
+   
 
   let filteredRecetas: Receta[] = [];
 
   if (tipo === "nuevas") {
-    filteredRecetas = recetas.slice(0, 5);
+    filteredRecetas = recetas.sort((a, b) => b.id - a.id).slice(0, 3);
   } else if (tipo === "recomendadas") {
     filteredRecetas = recetas.filter((receta) => receta.likesCount > 7);
-  } else if (tipo === "relacionadas") {
-    // Aquí debes implementar la lógica para filtrar las recetas relacionadas
-    // según la categoría
-    // Puedes usar la prop recetas para obtener todas las recetas y aplicar el filtro
-    // según la categoría deseada
+  } else if (tipo === "category") {
+    filteredRecetas = recetas.filter(
+      (receta) => receta.category === tipo);
   }
 
   return (
     <div className="">
       {loading ? (
-        <p className="text-center flex items-center justify-center text-black text-4xl font-bold h-[220px]">
+        <p className="text-center flex items-center justify-center text-black text-2xl sm:text-4xl font-bold h-[220px]">
           Cargando Recetas...
         </p>
       ) : (
@@ -77,7 +80,11 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
                 />
                 <CardFooter className="absolute bg-black/80 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                   <div>
-                    <p className="text-white text-lg font-bold">{item.title}</p>
+                    <p className="text-white text-md sm:text-lg font-bold">
+                      {item.title.length > 20
+                        ? `${item.title.slice(0, 20)}...`
+                        : item.title}
+                    </p>
                     {item.likesCount > 0 ? (
                       <div className="flex items-center gap-2">
                         <AiFillStar className="text-yellow-400" />

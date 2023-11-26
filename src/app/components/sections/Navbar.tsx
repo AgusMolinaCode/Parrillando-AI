@@ -32,7 +32,7 @@ export default function Menu() {
 
   return (
     <Navbar
-      className="bg-[#FCFBF4]/80 p-1 "
+      className="bg-[#FCFBF4]/80 p-1 px-2"
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
@@ -44,7 +44,7 @@ export default function Menu() {
         />
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden pr-3" justify="center">
+      <NavbarContent className="sm:hidden" justify="center">
         <Link href="/">
           <NavbarBrand>
             <div className={lobster.className}>
