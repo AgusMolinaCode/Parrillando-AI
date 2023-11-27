@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Lobster } from "next/font/google";
 import SwiperReceta from "../../Swiper/SwiperReceta";
 import { Receta } from "@/libs/interfaces/Receta";
@@ -29,7 +29,9 @@ const MejoresRecetas = async () => {
         </p>
       </div>
       <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
-        <SwiperReceta recetas={recetas} tipo="recomendadas" />
+      
+          <SwiperReceta recetas={recetas} tipo="recomendadas" />
+        
       </div>
     </div>
   );

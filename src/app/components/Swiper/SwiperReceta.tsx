@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, CardFooter, Image, Button } from "@nextui-org/react";
+import React, { useState, useEffect, Suspense } from "react";
+import { Card, CardFooter, Image, Button, LinkIcon } from "@nextui-org/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AiFillStar } from "react-icons/ai";
 import "swiper/css";
@@ -15,17 +15,12 @@ interface SwiperRecetaProps {
   tipo: "nuevas" | "recomendadas" | string;
 }
 
-
 const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
-
-
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     setLoading(false);
   }, []);
-   
 
   let filteredRecetas: Receta[] = [];
 
@@ -34,12 +29,12 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
   } else if (tipo === "recomendadas") {
     filteredRecetas = recetas.filter((receta) => receta.likesCount > 7);
   } else if (tipo === "category") {
-    filteredRecetas = recetas.filter(
-      (receta) => receta.category === tipo);
+    filteredRecetas = recetas.filter((receta) => receta.category === tipo);
   }
 
   return (
     <div className="">
+      <Suspense fallback={<p>Cargando...</p>}>
       {loading ? (
         <p className="text-center flex items-center justify-center text-black text-2xl sm:text-4xl font-bold h-[220px]">
           Cargando Recetas...
@@ -99,19 +94,19 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
                       </div>
                     )}
                   </div>
-                  <Button
-                    className="text-sm bg-orange-100 border border-orange-500"
-                    radius="full"
-                    size="md"
+                  <Link
+                    className="text-sm bg-orange-100 border border-orange-500 p-2 rounded-xl hover:bg-orange-200 transition duration-300 ease-in-out"
+                    href={`/receta/${item.id}`}
                   >
-                    <Link href={`/receta/${item.id}`}>Ver receta</Link>
-                  </Button>
+                    Ver receta
+                  </Link>
                 </CardFooter>
               </Card>
             </SwiperSlide>
           ))}
         </Swiper>
       )}
+      </Suspense>
     </div>
   );
 };

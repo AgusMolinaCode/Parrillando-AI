@@ -29,7 +29,7 @@ const RecetasNuevas = async () => {
           </span>
         </p>
       </div>
-      <div className="md:px-8 2xl:px-60 pt-8 p-2">
+      <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
         <SwiperReceta recetas={recetas} tipo="nuevas" />
       </div>
     </div>
