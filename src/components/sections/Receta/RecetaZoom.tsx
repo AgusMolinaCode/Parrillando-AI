@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css";
 
 import "./styles.css";
+import { Image } from "@nextui-org/react";
 
 interface Props {
   receta: RecetaId;
@@ -20,7 +21,7 @@ const RecetaZoom = ({ receta }: Props) => {
     <div className="max-w-[450px]">
       <div>
         <Zoom zoomMargin={30}>
-          <img
+          <Image
             src={receta.photo[0]}
             alt="Picture of the author"
             width={450}
@@ -51,7 +52,7 @@ const RecetaZoom = ({ receta }: Props) => {
             <SwiperSlide key={index} className="p-1">
               <Zoom zoomMargin={10}>
                 <div className="">
-                  <img
+                  <Image
                     src={photo}
                     alt={`Picture ${index + 2} of the author`}
                     width={200}

@@ -1,10 +1,12 @@
 import React from "react";
-import RecetaIngredientes from "@/app/components/sections/Receta/RecetaIngredientes";
-import RecetaProcedimiento from "@/app/components/sections/Receta/RecetaProcedimiento";
-import RecetaRecomendaciones from "@/app/components/sections/Receta/RecetaRecomendaciones";
-import RecetaRelacionada from "@/app/components/sections/Receta/RecetaRelacionada";
+import RecetaIngredientes from "@/components/sections/Receta/RecetaIngredientes";
+import RecetaProcedimiento from "@/components/sections/Receta/RecetaProcedimiento";
+import RecetaRecomendaciones from "@/components/sections/Receta/RecetaRecomendaciones";
+import RecetaRelacionada from "@/components/sections/Receta/RecetaRelacionada";
 import { RecetaId } from "@/libs/interfaces/RecetaId";
 import { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@nextui-org/react";
 
 interface Props {
   params: {
@@ -29,6 +31,19 @@ const getReceta = async (id: string): Promise<RecetaId> => {
 
 const page = async ({ params }: Props) => {
   const receta = await getReceta(params.id);
+
+  if (!receta.id) {
+    return (
+      <div className="text-2xl sm:text-4xl text-center text-black min-h-screen flex flex-col justify-center items-center">
+        Receta no encontrada
+        <Link href="/" className="text-orange-100 bg-black flex items-center rounded-xl mt-10 hover:shadow-2xl duration-500">
+          <Button className="bg-black text-white text-lg">
+            Volver al inicio
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="">

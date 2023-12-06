@@ -1,9 +1,10 @@
 import React from "react";
-import Form from "../components/sections/AI/Form";
+import Form from "../../components/sections/AI/Form";
 
 export const metadata = {
   title: "Recetas AI",
   description: "Genera tus propias recetas con la ayuda de la IA",
+  keywords: ["recetas", "cocina", "comida", "IA", "inteligencia artificial","AI"],
 };
 
 const page = () => {

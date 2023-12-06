@@ -37,7 +37,7 @@ const RecetaRelacionada = ({ receta }: Props) => {
     if (receta.category) {
       obtenerRecetasRelacionadas();
     }
-  }, [receta.category]);
+  }, [receta.category, receta.id]);
 
   if (!receta.category || recetasRelacionadas.length === 0) {
     return null;
