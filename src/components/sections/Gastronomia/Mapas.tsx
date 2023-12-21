@@ -1,11 +1,26 @@
-"use client";
-
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import { useEffect } from "react";
 
-const Mapas = () => {
-  
+import { FC } from "react";
+
+interface MapasProps {
+  coordinates: [number, number];
+  title: string;
+  zipCode: number;
+  direction: string;
+  city: string;
+}
+
+const Mapas: FC<MapasProps> = ({
+  coordinates,
+  title,
+  zipCode,
+  direction,
+  city,
+}) => {
+  console.log(title, coordinates, zipCode, direction, city);
+
   useEffect(() => {
     mapboxgl.accessToken =
       "pk.eyJ1IjoiYWd1c3Rpbm1vbGluYSIsImEiOiJjbG04NnZtZm0wNzF6M2xtOHNocXVpYnA1In0.HdYeHf_WAbKEAir1Tb4aeA" ||
@@ -13,28 +28,29 @@ const Mapas = () => {
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [-58.3982376, -34.5973132],
-      zoom: 16,
+      center: coordinates || [-58.3982376, -34.5973132],
+      zoom: 13,
     });
 
     const marker1 = new mapboxgl.Marker()
-      .setLngLat([-58.3982376, -34.5973132])
+      .setLngLat(coordinates || [-58.3982376, -34.5973132])
       .addTo(map);
 
-    const popup1 = new mapboxgl.Popup({ offset: 25 }).setHTML(
-      "<strong>Sonsiras Sanas</strong><p>Marcelo Torcuato de Alvear 2142, C1122 CABA</p>"
-    );
+    const popup1 = new mapboxgl.Popup({ offset: 25 });
+    const popupContent = document.createElement("div");
+    popupContent.innerHTML = `<strong>${title}</strong><p>${direction}, CP${zipCode} ${city}</p><p style="color: blue; text-decoration: underline;">Ver Ruta</p>`;
+    popupContent.onclick = () => {
+      window.open(
+        `https://www.google.com/maps/dir/?api=1&destination=${coordinates?.[1]},${coordinates?.[0]}`,
+        "_blank"
+      );
+    };
+    popup1.setDOMContent(popupContent);
 
     marker1.setPopup(popup1);
     marker1.togglePopup();
     window.scrollTo(0, 0);
-    onclick = () => {
-      window.open(
-        "https://www.google.com/maps/dir/?api=1&destination=Sonsiras Sanas&destination_place_id=ChIJtW9Jn7rKvJUR4Q0iJy8B0Kc",
-        "_blank"
-      );
-    };
-  }, []);
+  }, [coordinates, title, direction, zipCode, city]);
 
   return (
     <div>

@@ -1,11 +1,36 @@
+'use client';
+
+import { useState } from "react";
 import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 import React from "react";
 import RestaurantModal from "./RestaurantModal";
 import { Datos } from "@/libs/Datos";
+import Mapas from "./Mapas";
 
 const RestaurantGrid = () => {
+  const [selectedCoordinates, setSelectedCoordinates] = useState<[number, number] | null>(null);
+  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
+  const [selectedCode, setSelectedCode] = useState<number | null>(null);
+  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+
+  const handleComoLlegarClick = (
+    coordinates: [number, number] | null,
+    title: string | null,
+    zipCode: number | null,
+    direction: string | null,
+    city: string | null,
+  ) => {
+    setSelectedCoordinates(coordinates ?? [-58.3982376, -34.5973132]);
+    setSelectedTitle(title);
+    setSelectedCode(zipCode);
+    setSelectedDirection(direction);
+    setSelectedCity(city);
+  };
+
+  
   return (
-    <div className="flex flex-col">
+    <div className="max-w-[1500px] flex justify-center mx-auto mt-5 gap-2 flex-wrap">
       <div className="grid md:grid-cols-2 xl:grid-cols-1 xl:overflow-y-auto xl:h-[600px] mb-10">
         {Datos.map((dato, index) => (
           <div key={index} className="m-2">
@@ -39,14 +64,20 @@ const RestaurantGrid = () => {
                     color="primary"
                     radius="full"
                     size="sm"
+                    onClick={() =>
+                      handleComoLlegarClick([-57.3982376, -34.5973132])
+                    }
                   >
-                    Como Llegar 1
+                    Como Llegar ({-57.3982376}, {-34.5973132})
                   </Button>
                   <Button
                     className="text-tiny hidden xl:flex"
                     color="primary"
                     radius="full"
                     size="sm"
+                    onClick={() =>
+                      handleComoLlegarClick([dato.lng, dato.lat], dato.title, dato.zipCode, dato.direction, dato.city)
+                    }
                   >
                     Como Llegar
                   </Button>
@@ -55,6 +86,16 @@ const RestaurantGrid = () => {
             </Card>
           </div>
         ))}
+      </div>
+
+      <div className="bg-gray-500 h-[600px] w-[800px] hidden xl:block rounded-3xl">
+        <Mapas
+          coordinates={selectedCoordinates ?? [-58.3982376, -34.5973132]}
+          title={selectedTitle ?? "Pizzeria Guerrin"}
+          zipCode={selectedCode ?? 1043}
+          direction={selectedDirection ?? "Av. Corrientes 1368"}
+          city={selectedCity ?? "CABA"}
+        />
       </div>
     </div>
   );

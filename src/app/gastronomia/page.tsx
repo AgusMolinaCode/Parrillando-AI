@@ -16,11 +16,9 @@ const page = () => {
           </p>
         </div>
 
-        <div className="max-w-[1500px] flex justify-center mx-auto mt-5 gap-2 flex-wrap">
+        <div className="">
           <RestaurantGrid />
-          <div className="bg-gray-500 h-[600px] w-[800px] hidden xl:block rounded-3xl">
-            <Mapas />
-          </div>
+          
         </div>
       </div>
     </div>

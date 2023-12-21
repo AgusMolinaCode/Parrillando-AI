@@ -63,6 +63,7 @@ model Gastronomia {
   city        String
   whatsapp    String
   direction   String
+  zipCode     String
   author      User     @relation(fields: [authorId], references: [id])
   authorId    Int
 }
