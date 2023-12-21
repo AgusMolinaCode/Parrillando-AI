@@ -1,5 +1,6 @@
-import RestaurantGrid from "@/components/sections/Gastronomia/RestaurantGrid";
 import React from "react";
+import RestaurantGrid from "@/components/sections/Gastronomia/RestaurantGrid";
+import Mapas from "@/components/sections/Gastronomia/Mapas";
 
 const page = () => {
   return (
@@ -17,7 +18,9 @@ const page = () => {
 
         <div className="max-w-[1500px] flex justify-center mx-auto mt-5 gap-2 flex-wrap">
           <RestaurantGrid />
-          <div className="bg-gray-500 h-[600px] w-[800px] hidden xl:block"></div>
+          <div className="bg-gray-500 h-[600px] w-[800px] hidden xl:block rounded-3xl">
+            <Mapas />
+          </div>
         </div>
       </div>
     </div>

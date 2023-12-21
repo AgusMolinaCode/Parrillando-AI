@@ -28,7 +28,7 @@ export default function Menu() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Mis Recetas", "Recetas AI", "Gastronomia", "Recomendaciones"];
+  const menuItems = ["Mi Perfil", "Recetas AI", "Gastronomia", "Recomendaciones"];
 
   return (
     <Navbar
@@ -98,7 +98,7 @@ export default function Menu() {
         <SignedIn>
           <NavbarItem className="hidden sm:flex">
             <Link className="text-black text-lg font-bold" href="#">
-              Mis Recetas
+              Mi Perfil
             </Link>
           </NavbarItem>
           <UserButton afterSignOutUrl="/"/>
@@ -118,7 +118,7 @@ export default function Menu() {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full text-black"
-              href={`/${item.toLowerCase().replace(/\s/g, "-")}`} // aquí se actualiza el href
+              href={`/${item.toLowerCase().replace(/\s/g, "-")}`}
               size="lg"
             >
               {item}

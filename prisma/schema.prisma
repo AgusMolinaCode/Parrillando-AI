@@ -61,6 +61,8 @@ model Gastronomia {
   foodType    String
   province    String
   city        String
+  whatsapp    String
+  direction   String
   author      User     @relation(fields: [authorId], references: [id])
   authorId    Int
 }
