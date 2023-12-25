@@ -22,7 +22,7 @@ export const Datos = [
     foodType: "Trattoria",
     photo: "/bar1.jpeg",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim...",
-    price: "$$$",
+    price: "$$",
     province: "Buenos Aires",
     city: "CABA",
     lng: -58.3749726,

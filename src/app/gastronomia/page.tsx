@@ -2,6 +2,7 @@ import React from "react";
 import RestaurantGrid from "@/components/sections/Gastronomia/RestaurantGrid";
 import Mapas from "@/components/sections/Gastronomia/Mapas";
 
+
 const page = () => {
   return (
     <div className="">
@@ -17,8 +18,8 @@ const page = () => {
         </div>
 
         <div className="">
-          <RestaurantGrid />
           
+          <RestaurantGrid />
         </div>
       </div>
     </div>

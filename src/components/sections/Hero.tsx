@@ -36,20 +36,21 @@ const Hero = () => {
             nuevas recetas con nuestra Inteligencia Artificial. ¡Bienvenido a
             Parrillando!
           </p>
-          <Button className="mx-auto border p-6 mb-4 justify-center border-black mt-8 bg-orange-300 flex">
-            <Link href="/recetas-ai">
-              <div className="flex items-center gap-2">
+          <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 my-4">
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-orange-300 px-3 py-1 text-sm font-medium text-black hover:text-gray-800 duration-300 backdrop-blur-3xl">
+              <Link href="/recetas-ai" className="flex gap-2">
                 <div>
                   <p className="text-lg font-bold flex items-center gap-1">
                     Generar recetas con IA
                   </p>
                 </div>
-                <div className="animate-pulse">
+                <div className="">
                   <FaArrowRight className="text-2xl" />
                 </div>
-              </div>
-            </Link>
-          </Button>
+              </Link>
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -57,3 +58,24 @@ const Hero = () => {
 };
 
 export default Hero;
+
+{
+  /* <Button className="mx-auto border p-6 mb-4 justify-center border-black mt-8 bg-orange-300 flex">
+  <Link
+    href="/recetas-ai"
+    className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+  >
+    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+    <div className="flex items-center gap-2">
+      <div>
+        <p className="text-lg font-bold flex items-center gap-1">
+          Generar recetas con IA
+        </p>
+      </div>
+      <div className="animate-pulse">
+        <FaArrowRight className="text-2xl" />
+      </div>
+    </div>
+  </Link>
+</Button>; */
+}

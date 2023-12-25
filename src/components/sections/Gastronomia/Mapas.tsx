@@ -1,16 +1,8 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import { useEffect } from "react";
-
 import { FC } from "react";
-
-interface MapasProps {
-  coordinates: [number, number];
-  title: string;
-  zipCode: number;
-  direction: string;
-  city: string;
-}
+import { MapasProps } from "../../../libs/interfaces/MapasProps";
 
 const Mapas: FC<MapasProps> = ({
   coordinates,
@@ -19,12 +11,9 @@ const Mapas: FC<MapasProps> = ({
   direction,
   city,
 }) => {
-  console.log(title, coordinates, zipCode, direction, city);
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiYWd1c3Rpbm1vbGluYSIsImEiOiJjbG04NnZtZm0wNzF6M2xtOHNocXVpYnA1In0.HdYeHf_WAbKEAir1Tb4aeA" ||
-      "";
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPS_ID || "";
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/streets-v12",

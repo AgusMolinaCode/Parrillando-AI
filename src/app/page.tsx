@@ -2,7 +2,7 @@ import Hero from "../components/sections/Hero";
 import MejoresRecetas from "../components/sections/Mejores Recetas/MejoresRecetas";
 import Categorias from "../components/sections/Categorias/Categorias";
 import RecetasNuevas from "../components/sections/Nuevas Recetas/RecetasNuevas";
-import { Suspense } from "react";
+import GastronomiaMain from "@/components/sections/Gastronomia/GastronomiaMain";
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <MejoresRecetas />
       <RecetasNuevas />
       <Categorias />
+      <GastronomiaMain />
     </div>
   );
 }

@@ -9,18 +9,29 @@ module.exports = {
   ],
   theme: {
     extend: {
-      
+      animation: {
+        "background-shine": "background-shine 2s linear infinite",
+      },
+      keyframes: {
+        "background-shine": {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-200% 0",
+          },
+        },
+      },
     },
     screens: {
-      'xs': '431px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-    }
+      xs: "431px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
   },
   plugins: [nextui()],
   darkMode: "class",
 };
-
