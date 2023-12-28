@@ -8,7 +8,12 @@ import { Datos } from "@/libs/Datos";
 import Mapas from "./Mapas";
 import GastronomiaSelect from "./RestaurantFilters/GastronomiaSelect";
 
-const RestaurantGrid = () => {
+
+
+const RestaurantGrid =  () => {
+
+  
+
   const [selectedCoordinates, setSelectedCoordinates] = useState<
     [number, number] | null
   >(null);

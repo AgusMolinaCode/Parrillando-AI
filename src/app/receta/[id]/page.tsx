@@ -7,6 +7,7 @@ import { RecetaId } from "@/libs/interfaces/RecetaId";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
+import { title } from 'process';
 
 interface Props {
   params: {

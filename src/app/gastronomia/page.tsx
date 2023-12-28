@@ -1,9 +1,18 @@
 import React from "react";
 import RestaurantGrid from "@/components/sections/Gastronomia/RestaurantGrid";
-import Mapas from "@/components/sections/Gastronomia/Mapas";
+import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 
+async function getRestaurants(): Promise<Gastronomia[]> {
+  const response = await fetch("http://localhost:3000/api/gastronomia");
+  const restaurants = await response.json();
+  console.log(restaurants);
+  return restaurants;
+}
 
-const page = () => {
+const page = async () => {
+
+  const restaurants = await getRestaurants();
+
   return (
     <div className="">
       <div className=" sm:mx-2 mt-5 sm:mt-10 ">
@@ -18,7 +27,6 @@ const page = () => {
         </div>
 
         <div className="">
-          
           <RestaurantGrid />
         </div>
       </div>

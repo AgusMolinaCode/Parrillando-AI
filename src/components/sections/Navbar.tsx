@@ -28,7 +28,7 @@ export default function Menu() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Mi Perfil", "Recetas AI", "Gastronomia", "Recomendaciones"];
+  const menuItems = ["Mi Perfil", "Recetas AI", "Gastronomia"];
 
   return (
     <Navbar
@@ -85,11 +85,7 @@ export default function Menu() {
               </Link>
             </DropdownItem>
 
-            <DropdownItem key="recomendaciones">
-              <Link href="/recomendaciones" className="text-black">
-                Recomendaciones
-              </Link>
-            </DropdownItem>
+          
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
