@@ -2,7 +2,7 @@ export interface Gastronomia {
     id: number;
     title: string;
     description: string;
-    photo: string[];
+    photo: string;
     price: number;
     foodType: string;
     province: string;

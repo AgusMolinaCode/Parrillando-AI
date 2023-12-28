@@ -1,7 +1,7 @@
 export interface MapasProps {
     coordinates: [number, number];
     title: string;
-    zipCode: number;
+    zipCode: string;
     direction: string;
     city: string;
   }

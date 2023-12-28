@@ -4,21 +4,20 @@ import { useState } from "react";
 import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 import React from "react";
 import RestaurantModal from "./RestaurantModal";
-import { Datos } from "@/libs/Datos";
 import Mapas from "./Mapas";
 import GastronomiaSelect from "./RestaurantFilters/GastronomiaSelect";
+import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 
+interface RestaurantGridProps {
+  restaurants: Gastronomia[];
+}
 
-
-const RestaurantGrid =  () => {
-
-  
-
+const RestaurantGrid = ({ restaurants }: RestaurantGridProps) => {
   const [selectedCoordinates, setSelectedCoordinates] = useState<
     [number, number] | null
   >(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
-  const [selectedCode, setSelectedCode] = useState<number | null>(null);
+  const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [selectedDirection, setSelectedDirection] = useState<string | null>(
     null
   );
@@ -28,7 +27,7 @@ const RestaurantGrid =  () => {
   const handleComoLlegarClick = (
     coordinates: [number, number] | null,
     title: string | null,
-    zipCode: number | null,
+    zipCode: string | null,
     direction: string | null,
     city: string | null
   ) => {
@@ -48,7 +47,7 @@ const RestaurantGrid =  () => {
       <GastronomiaSelect />
       <div className="max-w-[1500px] flex justify-center mx-auto mt-5 gap-2 flex-wrap">
         <div className="grid md:grid-cols-2 xl:grid-cols-1 xl:overflow-y-auto xl:h-[600px] mb-10">
-          {Datos.map((dato, index) => (
+          {restaurants.map((dato, index) => (
             <div key={index} className="m-2">
               <Card isBlurred className="w-full h-[300px]">
                 <CardHeader className="absolute z-10 flex-col items-start bg-black/70 border-b-2 border-zinc-100/50">
@@ -76,7 +75,8 @@ const RestaurantGrid =  () => {
                 <CardFooter className="absolute  bottom-0 border-t-2 border-zinc-100/50 z-10 justify-between bg-black/70">
                   <div>
                     <p className="text-gray-200 text-sm font-bold">
-                      {dato.foodType} - <span className="text-yellow-300">{dato.price}</span> 
+                      {dato.foodType} -{" "}
+                      <span className="text-yellow-300">{dato.price}</span>
                     </p>
                     <p className="text-gray-100 text-md font-bold">
                       {dato.whatsapp}
@@ -127,7 +127,7 @@ const RestaurantGrid =  () => {
           <Mapas
             coordinates={selectedCoordinates ?? [-58.3982376, -34.5973132]}
             title={selectedTitle ?? "Pizzeria Guerrin"}
-            zipCode={selectedCode ?? 1043}
+            zipCode={selectedCode ?? "1043"}
             direction={selectedDirection ?? "Av. Corrientes 1368"}
             city={selectedCity ?? "CABA"}
           />

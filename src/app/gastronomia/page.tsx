@@ -5,12 +5,10 @@ import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 async function getRestaurants(): Promise<Gastronomia[]> {
   const response = await fetch("http://localhost:3000/api/gastronomia");
   const restaurants = await response.json();
-  console.log(restaurants);
   return restaurants;
 }
 
 const page = async () => {
-
   const restaurants = await getRestaurants();
 
   return (
@@ -26,8 +24,8 @@ const page = async () => {
           </p>
         </div>
 
-        <div className="">
-          <RestaurantGrid />
+        <div>
+          <RestaurantGrid restaurants={restaurants} />
         </div>
       </div>
     </div>

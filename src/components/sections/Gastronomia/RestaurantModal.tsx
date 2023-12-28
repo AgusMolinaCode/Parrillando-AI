@@ -9,9 +9,9 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { Modals } from "@/libs/interfaces/Modals";
+import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 
-export default function RestaurantModal({ dato }: Modals) {
+export default function RestaurantModal({dato}: { dato : Gastronomia}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (

@@ -29,9 +29,7 @@ const MejoresRecetas = async () => {
         </p>
       </div>
       <div className="md:px-20 2xl:px-60 pt-8 p-2 ">
-      
-          <SwiperReceta recetas={recetas} tipo="recomendadas" />
-        
+        <SwiperReceta recetas={recetas} tipo="recomendadas" />
       </div>
     </div>
   );
