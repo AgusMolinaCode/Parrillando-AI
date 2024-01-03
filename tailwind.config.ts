@@ -32,6 +32,6 @@ module.exports = {
       "2xl": "1536px",
     },
   },
-  plugins: [nextui()],
+  plugins: [nextui(), require("tailwindcss-animated")],
   darkMode: "class",
 };

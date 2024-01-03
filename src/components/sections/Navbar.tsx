@@ -18,13 +18,17 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Lobster } from "next/font/google";
-import { SignedIn, SignedOut, UserButton,useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
 export default function Menu() {
+  const pathname = usePathname();
 
-  const {user} = useUser();
+  const isMiPerfilPage = pathname === "/perfil";
+
+  const { user } = useUser();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -84,8 +88,6 @@ export default function Menu() {
                 Gastronomia
               </Link>
             </DropdownItem>
-
-          
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
@@ -93,16 +95,27 @@ export default function Menu() {
       <NavbarContent className="flex items-center" justify="end">
         <SignedIn>
           <NavbarItem className="hidden sm:flex">
-            <Link className="text-black text-lg font-bold" href="#">
-              Mi Perfil
-            </Link>
+            {isMiPerfilPage ? (
+              <Link className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black" href="/">
+                Inicio
+              </Link>
+            ) : (
+              <Link className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black" href="/perfil">
+                Mi Perfil
+              </Link>
+            )}
           </NavbarItem>
-          <UserButton afterSignOutUrl="/"/>
+          <UserButton afterSignOutUrl="/" />
         </SignedIn>
 
         <SignedOut>
           <NavbarItem>
-            <Button as={Link} className="bg-orange-400/30 border-1 border-black" href="/sign-in" variant="flat">
+            <Button
+              as={Link}
+              className="bg-orange-400/30 border-1 border-black"
+              href="/sign-in"
+              variant="flat"
+            >
               Iniciar sesión
             </Button>
           </NavbarItem>

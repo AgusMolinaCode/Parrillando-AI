@@ -1,26 +1,35 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { Button } from "@nextui-org/react";
 import { Lobster } from "next/font/google";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { fadeIn, staggerContainer } from "@/libs/framer-motion/motions";
 
 const lobster = Lobster({ weight: "400", preload: false });
 
 const Hero = () => {
   return (
-    <div>
-      <div className="flex flex-wrap justify-center items-center mt-10 px-2">
+    <div className="animate-fade-right animate-duration-[2000ms]">
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.25 }}
+        className="flex flex-wrap justify-center items-center mt-10 px-2"
+      >
         <div className="">
           <Image
-            src="/asado1.png"
+            src="/asado22-min.jpg"
             alt="Asado de tira"
-            width={600}
-            height={600}
+            width={800}
+            height={800}
             className=" lg:rounded-tl-2xl lg:rounded-bl-2xl rounded-2xl lg:rounded-none"
           />
         </div>
-        <div className="max-w-[500px] sm:h-[600px] bg-gray-800/10  mt-4 lg:mt-0 lg:rounded-tr-2xl lg:rounded-br-2xl rounded-2xl lg:rounded-none  border-black border-t-1 border-r-1 border-b-1 border-l-1 lg:border-l-0  flex flex-col items-center justify-center content-center">
+        <div className="max-w-[500px] sm:h-[532px] bg-gray-800/10  mt-4 xl:mt-0 xl:rounded-tr-2xl xl:rounded-br-2xl rounded-2xl xl:rounded-none  border-black border-t-1 border-r-1 border-b-1 border-l-1 xl:border-l-0  flex flex-col items-center justify-center content-center">
           <div className={lobster.className}>
             <h1 className="text-6xl sm:text-7xl pt-4 text-center text-black font-bold">
               Parrillando
@@ -52,7 +61,7 @@ const Hero = () => {
             </span>
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

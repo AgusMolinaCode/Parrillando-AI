@@ -24,7 +24,7 @@ const page = async () => {
           </p>
         </div>
 
-        <div>
+        <div className="animate-fade animate-duration-[2000ms]">
           <RestaurantGrid restaurants={restaurants} />
         </div>
       </div>

@@ -3,13 +3,16 @@ import MejoresRecetas from "../components/sections/Mejores Recetas/MejoresReceta
 import Categorias from "../components/sections/Categorias/Categorias";
 import RecetasNuevas from "../components/sections/Nuevas Recetas/RecetasNuevas";
 import GastronomiaMain from "@/components/sections/Gastronomia/GastronomiaMain";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <div>
-      <Hero />     
-      <MejoresRecetas />
-      <RecetasNuevas />
+      <Hero />
+      <Suspense>
+        <MejoresRecetas />
+        <RecetasNuevas />
+      </Suspense>
       <Categorias />
       <GastronomiaMain />
     </div>
