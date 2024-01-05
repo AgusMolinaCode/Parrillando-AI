@@ -3,7 +3,6 @@ import { Lobster } from "next/font/google";
 import {
   Card,
   CardHeader,
-  CardBody,
   CardFooter,
   Image,
   Button,
@@ -15,7 +14,7 @@ const lobster = Lobster({ weight: "400", preload: false });
 export default function GastronomiaMain() {
   return (
     <div className="max-w-[900px] flex flex-col justify-center mx-auto pb-24 sm:pt-6 px-1">
-      <Card className=" flex justify-center mx-auto mt-5 gap-2 flex-wrap">
+      <Card className="flex justify-center mx-auto mt-5 gap-2 flex-wrap shadow-2xl">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <div className={lobster.className}>
             <h1 className="text-white text-4xl sm:text-5xl text-center  font-bold ">

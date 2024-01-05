@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useState } from "react";
 import {
   Navbar,
@@ -32,7 +32,7 @@ export default function Menu() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Mi Perfil", "Recetas AI", "Gastronomia"];
+  const menuItems = ["Perfil", "Recetas AI", "Gastronomia"];
 
   return (
     <Navbar
@@ -76,36 +76,73 @@ export default function Menu() {
               Menu
             </p>
           </DropdownTrigger>
-          <DropdownMenu aria-label="Static Actions">
-            <DropdownItem key="generar">
-              <Link href="/recetas-ai" className="text-black">
-                Generar recetas con IA
-              </Link>
-            </DropdownItem>
 
-            <DropdownItem key="Gastronomia">
-              <Link href="/gastronomia" className="text-black">
-                Gastronomia
-              </Link>
-            </DropdownItem>
-          </DropdownMenu>
+          {isMiPerfilPage ? (
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem key="generar">
+                <Link href="/recetas-ai" className="text-black">
+                  Generar recetas con IA
+                </Link>
+              </DropdownItem>
+
+              <DropdownItem key="Gastronomia">
+                <Link href="/gastronomia" className="text-black">
+                  Gastronomia
+                </Link>
+              </DropdownItem>
+
+              <DropdownItem key="Mis Recetas">
+                <Link href="/gastronomia" className="text-black">
+                  Mis Recetas
+                </Link>
+              </DropdownItem>
+
+              <DropdownItem key="Mis Restaurants">
+                <Link href="/gastronomia" className="text-black">
+                  Mis Restaurants
+                </Link>
+              </DropdownItem>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem key="generar">
+                <Link href="/recetas-ai" className="text-black">
+                  Generar recetas con IA
+                </Link>
+              </DropdownItem>
+
+              <DropdownItem key="Gastronomia">
+                <Link href="/gastronomia" className="text-black">
+                  Gastronomia
+                </Link>
+              </DropdownItem>
+            </DropdownMenu>
+          )}
         </Dropdown>
       </NavbarContent>
 
       <NavbarContent className="flex items-center" justify="end">
         <SignedIn>
-          <NavbarItem className="hidden sm:flex">
-            {isMiPerfilPage ? (
-              <Link className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black" href="/">
-                Inicio
-              </Link>
-            ) : (
-              <Link className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black" href="/perfil">
-                Mi Perfil
-              </Link>
-            )}
-          </NavbarItem>
-          <UserButton afterSignOutUrl="/" />
+          <Suspense>
+            <NavbarItem className="hidden sm:flex">
+              {isMiPerfilPage ? (
+                <Link
+                  className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black"
+                  href="/"
+                >
+                  Inicio
+                </Link>
+              ) : (
+                <Link
+                  className="font-bold text-xl cursor-pointer hover:underline duration-250 mt-3 text-black"
+                  href="/perfil"
+                >
+                  Mi Perfil
+                </Link>
+              )}
+            </NavbarItem>
+            <UserButton afterSignOutUrl="/" />
+          </Suspense>
         </SignedIn>
 
         <SignedOut>
