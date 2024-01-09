@@ -90,15 +90,15 @@ export default function Menu() {
                   Gastronomia
                 </Link>
               </DropdownItem>
-
+              
               <DropdownItem key="Mis Recetas">
-                <Link href="/gastronomia" className="text-black">
+                <Link href="/gastronomia" className="text-black font-bold">
                   Mis Recetas
                 </Link>
               </DropdownItem>
 
               <DropdownItem key="Mis Restaurants">
-                <Link href="/gastronomia" className="text-black">
+                <Link href="/gastronomia" className="text-black font-bold">
                   Mis Restaurants
                 </Link>
               </DropdownItem>
