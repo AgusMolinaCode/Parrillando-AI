@@ -3,7 +3,7 @@ import MiPerfilSelect from "./MiPerfilSelect";
 import MisRecetasCard from "./MisRecetasCard";
 import MisRestaurantesCard from "./MisRestaurantesCard";
 
-const MisRecetasView = () => {
+const MiPerfilHome = () => {
   return (
     <div className="grid justify-center mx-auto pt-10">
       <MiPerfilSelect titulo="Mis Recetas" textoBotonCrear="Crear Receta" />
@@ -21,4 +21,4 @@ const MisRecetasView = () => {
   );
 };
 
-export default MisRecetasView;
+export default MiPerfilHome;

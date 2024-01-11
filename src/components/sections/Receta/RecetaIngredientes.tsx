@@ -16,8 +16,6 @@ const RecetaIngredientes = ({ receta }: Props) => {
     .replace(/y/g, "-")
     .replace(/(otrasrecetas)/g, "otras-recetas");
 
-  
-  
   return (
     <div className="flex flex-wrap justify-center mx-auto gap-5">
       <div>
@@ -39,9 +37,9 @@ const RecetaIngredientes = ({ receta }: Props) => {
         </h2>
         <div className="pt-4">
           <ul className="text-md sm:text-xl font-bold grid grid-cols-2">
-            {receta.ingredients && receta.ingredients.map((ingredient, index) => (
-              <div key={index}>
-                <li>
+            {receta.ingredients &&
+              receta.ingredients.map((ingredient, index) => (
+                <li key={index}>
                   <div className="flex flex-col">
                     <span className="font-bold"> ● {ingredient.name}</span>
                     <span className="ml-2 font-normal">
@@ -50,8 +48,7 @@ const RecetaIngredientes = ({ receta }: Props) => {
                     </span>
                   </div>
                 </li>
-              </div>
-            ))}
+              ))}
           </ul>
         </div>
       </div>

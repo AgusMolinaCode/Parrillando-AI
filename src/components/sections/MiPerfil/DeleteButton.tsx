@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -6,23 +6,24 @@ import { Button, ButtonGroup } from "@nextui-org/react";
 
 interface DeleteButtonProps {
   id: string;
+  url: string;
 }
 
-async function deleteRecipe(id: string) {
-  const response = await fetch(`http://localhost:3000/api/recetas/${id}`, {
+async function deleteItem(url: string, id: string) {
+  const response = await fetch(`${url}/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();
   return data;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({ id }) => {
+const DeleteButton: React.FC<DeleteButtonProps> = ({ id, url }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteRecipe(id);
+    await deleteItem(url, id);
     router.refresh();
     setIsDeleting(false);
   };

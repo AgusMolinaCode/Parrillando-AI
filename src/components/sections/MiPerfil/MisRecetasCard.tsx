@@ -77,7 +77,10 @@ export default async function MisRecetasCard() {
               </CardBody>
               <Divider />
               <CardFooter>
-                <DeleteButton id={recipe?.id.toString()} />
+                <DeleteButton
+                  id={recipe?.id.toString()}
+                  url="http://localhost:3000/api/recetas"
+                />
               </CardFooter>
             </div>
           </Card>

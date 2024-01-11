@@ -25,7 +25,7 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
   let filteredRecetas: Receta[] = [];
 
   if (tipo === "nuevas") {
-    filteredRecetas = recetas.sort((a, b) => b.id - a.id).slice(0, 3);
+    filteredRecetas = recetas.sort((a, b) => b.id - a.id).slice(0, 4);
   } else if (tipo === "recomendadas") {
     filteredRecetas = recetas.filter((receta) => receta.likesCount > 7);
   } else if (tipo === "category") {

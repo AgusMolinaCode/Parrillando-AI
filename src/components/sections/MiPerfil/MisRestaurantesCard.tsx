@@ -12,39 +12,40 @@ import {
 } from "@nextui-org/react";
 import { User } from "@/libs/interfaces/User";
 import { Gastronomia } from "@/libs/interfaces/Gastronomia";
+import DeleteButton from "./DeleteButton";
 
 async function getUser(): Promise<User[]> {
-    const response = await fetch("http://localhost:3000/api/users");
-    const users = await response.json();
-    return users;
-  }
-  
-  async function getUserRestaurants(): Promise<Gastronomia[]> {
-    const response = await fetch("http://localhost:3000/api/gastronomia");
-    const users = await response.json();
-    return users;
-  }
+  const response = await fetch("http://localhost:3000/api/users");
+  const users = await response.json();
+  return users;
+}
+
+async function getUserRestaurants(): Promise<Gastronomia[]> {
+  const response = await fetch("http://localhost:3000/api/gastronomia");
+  const users = await response.json();
+  return users;
+}
 
 const MisRestaurantesCard = async () => {
-    const users = await getUser();
-    const usersRestaurants = await getUserRestaurants();
-    const user = await currentUser();
-    const userCode = user?.id;
-  
-    const matchingUser = users.find((user) => user.clerkId === userCode);
-    const matchingUserRestaurants = usersRestaurants.filter(
-      (user) => user.authorId === matchingUser?.id
-    );
-  
-    const truncateText = (text: string, maxLength: number) => {
-      const words = text.split(" ");
-      if (words.length > maxLength) {
-        return words.slice(0, maxLength).join(" ") + "...";
-      }
-      return text;
-    };
-  
-    const description = matchingUserRestaurants[0]?.description;
+  const users = await getUser();
+  const usersRestaurants = await getUserRestaurants();
+  const user = await currentUser();
+  const userCode = user?.id;
+
+  const matchingUser = users.find((user) => user.clerkId === userCode);
+  const matchingUserRestaurants = usersRestaurants.filter(
+    (user) => user.authorId === matchingUser?.id
+  );
+
+  const truncateText = (text: string, maxLength: number) => {
+    const words = text.split(" ");
+    if (words.length > maxLength) {
+      return words.slice(0, maxLength).join(" ") + "...";
+    }
+    return text;
+  };
+
+  const description = matchingUserRestaurants[0]?.description;
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
       {matchingUserRestaurants.length > 0 ? (
@@ -61,7 +62,9 @@ const MisRestaurantesCard = async () => {
                 />
                 <div className="flex flex-col">
                   <p className="text-md">{item?.title}</p>
-                  <p className="text-small text-default-500">{item.direction}</p>
+                  <p className="text-small text-default-500">
+                    {item.direction}
+                  </p>
                 </div>
               </CardHeader>
               <Divider />
@@ -70,25 +73,23 @@ const MisRestaurantesCard = async () => {
               </CardBody>
               <Divider />
               <CardFooter>
-                <ButtonGroup className="border rounded-xl">
-                  <Button color="primary" variant="light" size="md">
-                    Editar
-                  </Button>
-                  <Button color="danger" variant="light" size="md">
-                    Eliminar
-                  </Button>
-                </ButtonGroup>
+                <DeleteButton
+                  id={item?.id.toString()}
+                  url="http://localhost:3000/api/gastronomia"
+                />
               </CardFooter>
             </div>
           </Card>
         ))
       ) : (
         <div className="flex justify-center items-center mx-auto">
-          <p className="font-bold text-4xl text-center mx-auto flex justify-center">No hay recetas disponibles</p>
+          <p className="font-bold text-4xl text-center mx-auto flex justify-center">
+            No hay recetas disponibles
+          </p>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MisRestaurantesCard
+export default MisRestaurantesCard;

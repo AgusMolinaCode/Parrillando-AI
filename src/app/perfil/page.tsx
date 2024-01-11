@@ -1,5 +1,5 @@
 import MiPerfilMenu from "@/components/sections/MiPerfil/MiPerfilMenu";
-import MisRecetasView from "@/components/sections/MiPerfil/MisRecetasView";
+import MiPerfilHome from "@/components/sections/MiPerfil/MiPerfilHome";
 import React from "react";
 
 
@@ -8,7 +8,7 @@ const Page = () => {
     <div className="min-h-screen">
       <MiPerfilMenu />
       <div>
-        <MisRecetasView />
+        <MiPerfilHome />
       </div>
     </div>
   );
