@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Input } from "@nextui-org/react";
 
 interface Props {
 	ingredients: { name: string; quantity: string }[];
@@ -25,37 +26,52 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 		setIngredients([...ingredients, { name: "", quantity: "" }]);
 	};
 
+	const handleRemoveIngredient = () => {
+		const values = [...ingredients];
+		values.pop();
+		setIngredients(values);
+	};
+
 	return (
-		<div className="flex flex-col items-center">
+		<div className="max-w-lg flex flex-col justify-center mx-auto px-2">
 			{ingredients.map((ingredient, index) => (
 				<div key={index}>
-					<label
-						htmlFor={`name${index}`}
-						className="text-gray-500 text-xl font-bold"
-					>
-						Ingrediente {index + 1}
-					</label>
-					<input
+					<Input
+						label={`Ingrediente ${index + 1}`}
+						labelPlacement="outside"
+						placeholder="Nombre del ingrediente"
 						type="text"
 						name="name"
 						id={`name${index}`}
 						value={ingredient.name}
 						onChange={event => handleIngredientChange(index, event)}
-						className="border border-gray-300 rounded-md w-96 p-2 my-2"
+						className="my-2"
+						radius="lg"
 					/>
-					<input
+					<Input
+						placeholder="Añade la cantidad"
 						type="text"
 						name="quantity"
 						id={`quantity${index}`}
 						value={ingredient.quantity}
 						onChange={event => handleIngredientChange(index, event)}
-						className="border border-gray-300 rounded-md w-96 p-2 my-2"
+						className="pb-4"
+						radius="lg"
+						classNames={{
+							input: "h-4",
+							inputWrapper: "h-4",
+						}}
 					/>
 				</div>
 			))}
-			<button type="button" onClick={handleAddIngredient}>
-				Añadir ingrediente
-			</button>
+			<div className="flex justify-center mx-auto gap-2 flex-wrap">
+				<Button type="button" color="primary" onClick={handleAddIngredient}>
+					Añadir ingrediente
+				</Button>
+				<Button type="button" color="danger" onClick={handleRemoveIngredient}>
+					Eliminar ingrediente
+				</Button>
+			</div>
 		</div>
 	);
 };

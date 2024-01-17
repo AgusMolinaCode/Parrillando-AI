@@ -1,3 +1,4 @@
+import { Textarea, Button } from "@nextui-org/react";
 import React from "react";
 
 interface Props {
@@ -14,7 +15,7 @@ const Steps = ({ steps, setSteps }: Props) => {
 
 	const handleStepChange = (
 		index: number,
-		event: React.ChangeEvent<HTMLTextAreaElement>
+		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const values = [...steps];
 		setValue(values[index], event.target.name, event.target.value);
@@ -25,30 +26,44 @@ const Steps = ({ steps, setSteps }: Props) => {
 		setSteps([...steps, { description: "" }]);
 	};
 
+	const handleRemoveStep = () => {
+		const values = [...steps];
+		values.pop();
+		setSteps(values);
+	};
+
 	return (
-		<div className="flex flex-col items-center">
+		<div className="max-w-lg flex flex-col justify-center mx-auto px-2">
 			{steps.map((step, index) => (
 				<div key={index}>
-					<label
+					{/* <label
 						htmlFor={`description${index}`}
 						className="text-gray-500 text-xl font-bold"
 					>
 						Paso {index + 1}
-					</label>
-					<textarea
+					</label> */}
+					<Textarea
 						name="description"
+						label={`Paso ${index + 1}`}
+						labelPlacement="outside"
 						id={`description${index}`}
 						value={step.description}
 						onChange={event => handleStepChange(index, event)}
-						cols={30}
-						rows={10}
-						className="border border-gray-300 rounded-md w-96 p-2 my-2"
-					></textarea>
+						classNames={{
+							label: "text-gray-800",
+						}}
+						className="my-2"
+					/>
 				</div>
 			))}
-			<button type="button" onClick={handleAddStep}>
-				Añadir paso
-			</button>
+			<div className="flex justify-center mx-auto gap-2 flex-wrap mt-4">
+				<Button type="button" color="primary" onClick={handleAddStep}>
+					Añadir paso
+				</Button>
+				<Button type="button" color="danger" onClick={handleRemoveStep}>
+					Eliminar paso
+				</Button>
+			</div>
 		</div>
 	);
 };

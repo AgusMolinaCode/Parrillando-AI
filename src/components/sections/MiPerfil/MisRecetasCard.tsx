@@ -7,8 +7,6 @@ import {
   CardFooter,
   Divider,
   Image,
-  ButtonGroup,
-  Button,
 } from "@nextui-org/react";
 import { User } from "@/libs/interfaces/User";
 import { Receta } from "@/libs/interfaces/Receta";
