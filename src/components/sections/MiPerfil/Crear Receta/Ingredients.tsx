@@ -47,6 +47,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 						onChange={event => handleIngredientChange(index, event)}
 						className="my-2"
 						radius="lg"
+						isRequired
 					/>
 					<Input
 						placeholder="Añade la cantidad"
@@ -61,6 +62,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 							input: "h-4",
 							inputWrapper: "h-4",
 						}}
+						isRequired
 					/>
 				</div>
 			))}

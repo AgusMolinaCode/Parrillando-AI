@@ -7,7 +7,6 @@ import { RecetaId } from "@/libs/interfaces/RecetaId";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
-import { title } from 'process';
 
 interface Props {
   params: {
@@ -25,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 const getReceta = async (id: string): Promise<RecetaId> => {
-  const response = await fetch(`http://localhost:3000/api/recetas/${id}`);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const response = await fetch(`${apiUrl}api/recetas/${id}`);
   const receta = await response.json();
   return receta;
 };

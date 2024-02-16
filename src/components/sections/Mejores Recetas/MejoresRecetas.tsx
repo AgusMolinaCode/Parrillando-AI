@@ -6,7 +6,8 @@ import { Receta } from "@/libs/interfaces/Receta";
 const lobster = Lobster({ weight: "400", preload: false });
 
 async function getRecetas(): Promise<Receta[]> {
-  const response = await fetch("http://localhost:3000/api/recetas");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const response = await fetch(`${apiUrl}recetas`);
   const recetas = await response.json();
   return recetas;
 }

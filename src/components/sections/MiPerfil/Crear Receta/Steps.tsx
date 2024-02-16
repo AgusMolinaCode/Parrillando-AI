@@ -36,12 +36,6 @@ const Steps = ({ steps, setSteps }: Props) => {
 		<div className="max-w-lg flex flex-col justify-center mx-auto px-2">
 			{steps.map((step, index) => (
 				<div key={index}>
-					{/* <label
-						htmlFor={`description${index}`}
-						className="text-gray-500 text-xl font-bold"
-					>
-						Paso {index + 1}
-					</label> */}
 					<Textarea
 						name="description"
 						label={`Paso ${index + 1}`}
@@ -53,6 +47,7 @@ const Steps = ({ steps, setSteps }: Props) => {
 							label: "text-gray-800",
 						}}
 						className="my-2"
+						isRequired
 					/>
 				</div>
 			))}

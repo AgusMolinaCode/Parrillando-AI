@@ -14,6 +14,7 @@ interface Props {
 }
 
 const RecetaRelacionada = ({ receta }: Props) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [recetasRelacionadas, setRecetasRelacionadas] = useState<RecetaId[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +22,7 @@ const RecetaRelacionada = ({ receta }: Props) => {
     const obtenerRecetasRelacionadas = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/api/recetas`);
+        const response = await fetch(`${apiUrl}recetas`);
         const recetas = await response.json();
         const recetasFiltradas = recetas.filter(
           (item: { category: string; id: number; }) => item.category === receta.category && item.id !== receta.id

@@ -4,48 +4,95 @@
 import React, { useState, useEffect } from "react";
 import Ingredients from "../../components/sections/MiPerfil/Crear Receta/Ingredients";
 import Steps from "../../components/sections/MiPerfil/Crear Receta/Steps";
-import { Input, Select, SelectItem, Textarea, Button } from "@nextui-org/react";
-import { FaUser, FaTag } from "react-icons/fa";
-import { List as CategoryList } from "@/libs/interfaces/categorias";
+import { Button } from "@nextui-org/react";
 import { useAuth } from "@clerk/nextjs";
 import { getAuthorId } from "@/libs/api/UserId";
+import toast, { Toaster } from "react-hot-toast";
+import FormFields from "@/components/sections/MiPerfil/Crear Receta/FormFields";
+import { Categoria } from "@/libs/interfaces/categorias";
+import { useRouter } from "next/navigation";
+
+const notify = () => toast.success("Receta creada con éxito!");
 
 const page = () => {
+	const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 	const [authorId, setAuthorId] = useState<string | null>(null);
 	const { userId } = useAuth();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (userId) {
 			getAuthorId(userId).then(id => {
-				setAuthorId(id); // Muestra el authorId en la consola
+				setAuthorId(id);
 			});
 		}
 	}, [userId]);
 
 	const [title, setTitle] = useState("");
-	const [category, setCategory] = useState("");
+	const [category, setCategory] = useState<Categoria | null>(null);
 	const [description, setDescription] = useState("");
 	const [photo, setPhoto] = useState("");
 	const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
 	const [steps, setSteps] = useState([{ description: "" }]);
+	const [likesCount, setLikesCount] = useState(0);
+	const [creando, setCreando] = useState(false);
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		setCreando(true);
 		event.preventDefault();
 		const recipe = {
 			title,
-			category,
+			category: category?.title,
 			description,
-			photo,
+			photo: [photo], // Asegúrate de que `photo` es una cadena de texto
 			authorId,
-			ingredients,
-			steps,
+			likesCount: likesCount,
+			ingredients: ingredients.map(ingredient => ({
+				name: ingredient.name,
+				quantity: ingredient.quantity,
+			})),
+			steps: steps.map(step => ({
+				description: step.description,
+			})),
 		};
-		console.log(recipe);
+
+		const response = await fetch(`${apiUrl}recetas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(recipe),
+		});
+
+		if (!response.ok) {
+			const message = `Error al crear la receta: ${response.status} ${
+				response.statusText
+			}. ${await response.text()}`;
+			throw new Error(message);
+		}
+
+		const responseData = await response.json();
+
+		notify();
+		FormReset();
+		setCreando(false);
+		router.push('/perfil');
+	};
+
+	const FormReset = () => {
+		setTitle("");
+		setCategory(null);
+		setDescription("");
+		setPhoto("");
+		setIngredients([{ name: "", quantity: "" }]);
+		setSteps([{ description: "" }]);
 	};
 
 	return (
 		<div>
-			<div></div>
+			<div>
+				<Toaster position="top-center" />
+			</div>
 			<div className="max-w-lg flex flex-col justify-center mx-auto mt-6 mb-10 sm:border sm:border-gray-300 rounded-xl sm:p-3 px-2">
 				<form onSubmit={handleSubmit}>
 					<div className="pb-7 pt-2 px-2">
@@ -58,57 +105,15 @@ const page = () => {
 					</div>
 					<div className="flex flex-col">
 						<div className="flex flex-col items-center justify-center px-2 content-center">
-							<Input
-								type="text"
-								label="Titulo"
-								placeholder="Añade un título"
-								labelPlacement="outside"
-								onChange={e => setTitle(e.target.value)}
-								value={title}
-								startContent={<FaUser size={20} color="#000" />}
-								radius="lg"
-								className="my-6"
-								isRequired
-							/>
-							<Select
-								value={category}
-								label="Categoría"
-								placeholder="Selecciona tu categoría"
-								labelPlacement="outside"
-								onChange={e => setCategory(e.target.value)}
-								startContent={<FaTag size={20} color="#000" />}
-								radius="lg"
-								className="my-6"
-								isRequired
-							>
-								{CategoryList.map(category => (
-									<SelectItem key={category.id} value={category.id}>
-										{category.title}
-									</SelectItem>
-								))}
-							</Select>
-							<Textarea
-								value={description}
-								onChange={e => setDescription(e.target.value)}
-								label="Description"
-								labelPlacement="outside"
-								placeholder="Descripción de la receta"
-								className="mb-6"
-								isRequired
-							/>
-							<Input
-								type="file"
-								value={photo}
-								onChange={e => setPhoto(e.target.value)}
-								placeholder="URL de la foto"
-								label="Foto"
-								labelPlacement="outside"
-								className="mb-6"
-								multiple
-								classNames={{
-									input: "p-2",
-								}}
-								isRequired
+							<FormFields
+								title={title}
+								setTitle={setTitle}
+								category={category as Categoria}
+								setCategory={setCategory}
+								description={description}
+								setDescription={setDescription}
+								photo={photo}
+								setPhoto={setPhoto}
 							/>
 						</div>
 					</div>
@@ -123,7 +128,7 @@ const page = () => {
 							className="mt-3 flex justify-center mx-auto"
 							type="submit"
 						>
-							Enviar
+							{creando ? "Creando..." : "Crear receta"}
 						</Button>
 					</div>
 				</form>

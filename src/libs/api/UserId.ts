@@ -1,5 +1,6 @@
 export async function getAuthorId(userId: string | null): Promise<string | null> {
-  const response = await fetch("http://localhost:3000/api/users");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const response = await fetch(`${apiUrl}users`);
   const users = await response.json();
 
   // Obtén el clerkId del usuario actual
@@ -12,7 +13,7 @@ export async function getAuthorId(userId: string | null): Promise<string | null>
 
   // Si se encuentra un usuario que coincide, devuelve su authorId
   if (matchingUser) {
-    console.log('AuthorId:', matchingUser.id); // Muestra el authorId
+    // console.log('AuthorId:', matchingUser.id); // Muestra el authorId
     return matchingUser.id;
   }
 
