@@ -29,26 +29,21 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ id, url }) => {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			setTimeout(() => setIsDeleting(false), 5000); // espera 1 segundo antes de cambiar el estado
+			setTimeout(() => setIsDeleting(false), 5000);
 		}
 	};
 
 	return (
 		<>
-			<ButtonGroup className="border rounded-xl">
-				<Button color="primary" variant="light" size="md">
-					Editar
-				</Button>
-				<Button
-					onClick={handleDelete}
-					color="danger"
-					variant="light"
-					size="md"
-					isDisabled={isDeleting ? true : false}
-				>
-					{isDeleting ? "Eliminando..." : "Eliminar"}
-				</Button>
-			</ButtonGroup>
+			<Button
+				onClick={handleDelete}
+				color="danger"
+				variant="light"
+				size="md"
+				isDisabled={isDeleting ? true : false}
+			>
+				{isDeleting ? "Eliminando..." : "Eliminar"}
+			</Button>
 		</>
 	);
 };

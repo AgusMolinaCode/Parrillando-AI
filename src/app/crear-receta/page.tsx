@@ -44,7 +44,7 @@ const page = () => {
 			title,
 			category: category?.title,
 			description,
-			photo: [photo], // Asegúrate de que `photo` es una cadena de texto
+			photo: [photo],
 			authorId,
 			likesCount: likesCount,
 			ingredients: ingredients.map(ingredient => ({

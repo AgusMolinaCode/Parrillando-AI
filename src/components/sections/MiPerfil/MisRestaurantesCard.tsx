@@ -60,7 +60,11 @@ const MisRestaurantesCard = async () => {
 									alt={item?.title}
 									height={60}
 									radius="sm"
-									src={item?.photo[0]}
+									src={
+										item?.photo.length > 0 && item?.photo[0].startsWith("https")
+											? item?.photo[0]
+											: "/not-found.png"
+									}
 									width={60}
 								/>
 								<div className="flex flex-col">

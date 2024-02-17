@@ -72,7 +72,7 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
                     alt={item.title}
                     className="hover:scale-105 w-[100vw] h-[250px] sm:h-[300px]"
                     src={
-                      item.photo.length > 0 ? item.photo[0] : "/not-found.png"
+                      item.photo.length > 0 && item.photo[0].startsWith('https') ? item.photo[0] : "/not-found.png"
                     }
                   />
                   <CardFooter className="absolute bg-black/80 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">

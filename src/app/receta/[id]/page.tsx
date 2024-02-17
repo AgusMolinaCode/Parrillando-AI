@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 const getReceta = async (id: string): Promise<RecetaId> => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${apiUrl}api/recetas/${id}`);
+  const response = await fetch(`${apiUrl}recetas/${id}`);
   const receta = await response.json();
   return receta;
 };
