@@ -67,10 +67,10 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 				</div>
 			))}
 			<div className="flex justify-center mx-auto gap-2 flex-wrap">
-				<Button type="button" color="primary" onClick={handleAddIngredient}>
+				<Button type="button" className="text-blue-700 bg-transparent text-md" onClick={handleAddIngredient}>
 					Añadir ingrediente
 				</Button>
-				<Button type="button" color="danger" onClick={handleRemoveIngredient}>
+				<Button type="button"className="text-red-700 bg-transparent text-md" onClick={handleRemoveIngredient}>
 					Eliminar ingrediente
 				</Button>
 			</div>

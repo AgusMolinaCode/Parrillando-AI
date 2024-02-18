@@ -19,7 +19,7 @@ const MiPerfilSelect: React.FC<MiPerfilSelectProps> = ({
         {titulo}
       </h1>
       <Link href={BotonPage}>
-        <Button color="success">{textoBotonCrear}</Button>
+        <Button className="border bg-transparent border-gray-400 text-gray-900 hover:bg-green-400/40">{textoBotonCrear}</Button>
       </Link>
     </div>
   );

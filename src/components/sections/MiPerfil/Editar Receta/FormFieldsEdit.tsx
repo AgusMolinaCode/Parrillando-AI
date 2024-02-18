@@ -63,24 +63,7 @@ const FormFieldsEdit = ({
 				className="mb-6"
 				isRequired
 			/>
-			{/* <Input
-				type="file"
-				name="photo"
-				onChange={e => {
-					if (e.target.files && e.target.files.length > 0) {
-						setFile(e.target.files[0]);
-					}
-				}}
-				placeholder="URL de la foto"
-				label="Foto"
-				labelPlacement="outside"
-				className="mb-6"
-				multiple
-				classNames={{
-					input: "p-2",
-				}}
-				isRequired
-			/> */}
+		
 		</>
 	);
 };

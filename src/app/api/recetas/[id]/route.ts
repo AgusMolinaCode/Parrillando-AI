@@ -5,43 +5,42 @@ import { Ingredient } from "@/libs/interfaces/Ingredient";
 import { Step } from "@/libs/interfaces/Steps";
 
 interface Params {
-  params: {
-    id: string;
-  };
+	params: {
+		id: string;
+	};
 }
 
 export async function GET(request: Request, { params }: Params) {
-  
-  try {
-    const recipe = await prisma.recipe.findFirst({
-      where: {
-        id: Number(params.id),
-      },
-      include: {
-        ingredients: true,
-        steps: true,
-      },
-    });
+	try {
+		const recipe = await prisma.recipe.findFirst({
+			where: {
+				id: Number(params.id),
+			},
+			include: {
+				ingredients: true,
+				steps: true,
+			},
+		});
 
-    if (!recipe) {
-      return NextResponse.json(
-        {
-          message: "No se encontró la receta",
-        },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json(recipe);
-  } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        { status: 500 }
-      );
-    }
-  }
+		if (!recipe) {
+			return NextResponse.json(
+				{
+					message: "No se encontró la receta",
+				},
+				{ status: 404 }
+			);
+		}
+		return NextResponse.json(recipe);
+	} catch (error) {
+		if (error instanceof Error) {
+			return NextResponse.json(
+				{
+					message: error.message,
+				},
+				{ status: 500 }
+			);
+		}
+	}
 }
 
 export async function PUT(request: Request, { params }: Params) {
@@ -51,11 +50,17 @@ export async function PUT(request: Request, { params }: Params) {
       title,
       category,
       description,
-      photo,
       likesCount,
       ingredients,
       steps,
     } = await request.json();
+
+    // Primero, elimina todos los ingredientes de la receta
+    await prisma.ingredient.deleteMany({
+      where: {
+        recipeId: Number(params.id),
+      },
+    });
 
     const actualizarReceta = await prisma.recipe.update({
       where: {
@@ -65,27 +70,12 @@ export async function PUT(request: Request, { params }: Params) {
         title,
         category,
         description,
-        photo: {
-          set: photo,
-        },
         likesCount,
         ingredients: {
-          upsert: ingredients.map((ingredient: Ingredient) => ({
-            where: { id: ingredient.id },
-            create: {
-              name: ingredient.name,
-              quantity: ingredient.quantity,
-            },
-            update: {
-              name: ingredient.name,
-              quantity: ingredient.quantity,
-            },
+          create: ingredients.map((ingredient: Ingredient) => ({
+            name: ingredient.name,
+            quantity: ingredient.quantity,
           })),
-          deleteMany: {
-            id: {
-              notIn: ingredients.map((ingredient: Ingredient) => ingredient.id),
-            },
-          },
         },
         steps: {
           upsert: steps.map((step: Step) => ({
@@ -97,11 +87,6 @@ export async function PUT(request: Request, { params }: Params) {
               description: step.description,
             },
           })),
-          deleteMany: {
-            id: {
-              notIn: steps.map((step: Step) => step.id),
-            },
-          },
         },
       },
       include: {
@@ -112,17 +97,6 @@ export async function PUT(request: Request, { params }: Params) {
 
     return NextResponse.json(actualizarReceta);
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return NextResponse.json(
-          {
-            message: "No se encontró la receta",
-          },
-          { status: 404 }
-        );
-      }
-    }
-
     if (error instanceof Error) {
       return NextResponse.json(
         {
@@ -135,44 +109,44 @@ export async function PUT(request: Request, { params }: Params) {
 }
 
 export async function DELETE(request: Request, { params }: Params) {
-  try {
-    const id = Number(params.id);
+	try {
+		const id = Number(params.id);
 
-    // Eliminar ingredientes asociados
-    await prisma.ingredient.deleteMany({
-      where: {
-        recipeId: id,
-      },
-    });
+		// Eliminar ingredientes asociados
+		await prisma.ingredient.deleteMany({
+			where: {
+				recipeId: id,
+			},
+		});
 
-    // Eliminar pasos asociados
-    await prisma.step.deleteMany({
-      where: {
-        recipeId: id,
-      },
-    });
+		// Eliminar pasos asociados
+		await prisma.step.deleteMany({
+			where: {
+				recipeId: id,
+			},
+		});
 
-    // Eliminar la receta
-    await prisma.recipe.delete({
-      where: {
-        id,
-      },
-    });
+		// Eliminar la receta
+		await prisma.recipe.delete({
+			where: {
+				id,
+			},
+		});
 
-    return NextResponse.json(
-      {
-        message: "Receta y elementos asociados eliminados con éxito",
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        {
-          message: 'No se encontro la receta',
-        },
-        { status: 500 }
-      );
-    }
-  }
+		return NextResponse.json(
+			{
+				message: "Receta y elementos asociados eliminados con éxito",
+			},
+			{ status: 200 }
+		);
+	} catch (error) {
+		if (error instanceof Error) {
+			return NextResponse.json(
+				{
+					message: "No se encontro la receta",
+				},
+				{ status: 500 }
+			);
+		}
+	}
 }

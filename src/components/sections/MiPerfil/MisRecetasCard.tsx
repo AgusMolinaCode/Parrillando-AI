@@ -80,13 +80,21 @@ export default async function MisRecetasCard() {
 							</CardHeader>
 							<Divider />
 							<CardBody>
-								<p>{truncateText(recipe.description, 15)}</p>
+								<p>{truncateText(recipe.description, 30)}</p>
 							</CardBody>
 							<Divider />
 							<CardFooter>
 								<ButtonGroup className="border rounded-xl">
-									<Link href={`/editar-receta/${recipe?.id}`}>
-										<Button color="primary" variant="light" size="md">
+									<Link
+										className="rounded-l-lg rounded-r-none"
+										href={`/editar-receta/${recipe?.id}`}
+									>
+										<Button
+											color="primary"
+											variant="light"
+											className="rounded-l-lg rounded-r-none"
+											size="md"
+										>
 											Editar
 										</Button>
 									</Link>

@@ -1,8 +1,10 @@
 "use client";
 
+import FormFieldsEdit from "@/components/sections/MiPerfil/Editar Receta/FormFieldsEdit";
+import IngredientsEdit from "@/components/sections/MiPerfil/Editar Receta/IngredientsEdit";
 import { RecetaId } from "@/libs/interfaces/RecetaId";
 import { List, Categoria } from "@/libs/interfaces/categorias";
-import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { FaTag, FaUser } from "react-icons/fa";
@@ -16,6 +18,10 @@ const Page = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [category, setCategory] = useState<Categoria>(List[0]);
+	const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
+	const [selectedIngredientIndex, setSelectedIngredientIndex] = useState<
+		number | null
+	>(null);
 
 	useEffect(() => {
 		fetch(`${apiUrl}recetas/${id}`)
@@ -28,12 +34,21 @@ const Page = () => {
 				if (categoryData) {
 					setCategory(categoryData);
 				}
+				setIngredients(data.ingredients);
 			});
 	}, [apiUrl, id]);
 
 	if (!recipe) {
-		return <div>Cargando...</div>;
+		return (
+			<div className="min-h-screen flex justify-center mx-auto font-bold text-3xl items-center">
+				Cargando...
+			</div>
+		);
 	}
+
+	const handleAddIngredient = () => {
+		setIngredients([...ingredients, { name: "", quantity: "" }]);
+	};
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
@@ -42,18 +57,23 @@ const Page = () => {
 
 		const form = event.currentTarget as HTMLFormElement;
 
+		const updatedIngredients = ingredients.map((ingredient, index) => {
+			const nameInput = form[`ingredient-name-${index}`] as HTMLInputElement;
+			const quantityInput = form[
+				`ingredient-quantity-${index}`
+			] as HTMLInputElement;
+			return {
+				name: nameInput ? nameInput.value : "",
+				quantity: quantityInput ? quantityInput.value : "",
+				recipeId: recipe.id,
+			};
+		});
+
 		const updatedRecipe = {
 			title: title,
 			category: category.title,
 			description: description,
-			photo: [(form["photo"] as HTMLInputElement).value],
-			ingredients: recipe.ingredients.map((ingredient, index) => ({
-				id: ingredient.id,
-				name: (form[`ingredient-name-${index}`] as HTMLInputElement).value,
-				quantity: (form[`ingredient-quantity-${index}`] as HTMLInputElement)
-					.value,
-				recipeId: recipe.id,
-			})),
+			ingredients: updatedIngredients,
 			steps: recipe.steps.map((step, index) => ({
 				id: step.id,
 				description: (form[`step-${index}`] as HTMLTextAreaElement).value,
@@ -73,92 +93,48 @@ const Page = () => {
 		setIsSaving(false);
 	};
 
+	const handleIngredientChange = (
+		index: number,
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const values = [...ingredients];
+		if (event.target.name === "name") {
+			values[index].name = event.target.value;
+		} else if (event.target.name === "quantity") {
+			values[index].quantity = event.target.value;
+		}
+		setIngredients(values);
+	};
+
+	const handleRemoveIngredient = (index: number) => {
+		const newIngredients = [...ingredients];
+		newIngredients.splice(index, 1);
+		setIngredients(newIngredients);
+	};
+
 	return (
-		<div className="flex justify-center items-center min-h-screen bg-gray-100">
+		<div className="sm:flex sm:justify-center px-2 items-center min-h-screen bg-gray-100">
 			<form
-				className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col"
+				className="bg-white shadow-md rounded px-2 mt-6 mb-8 p-4 flex flex-col sm:w-[600px] "
 				onSubmit={handleSubmit}
 			>
 				<h1 className="mb-4 text-xl font-bold">Editar receta {recipe.title}</h1>
-
-				<Input
-					type="text"
-					label="Titulo"
-					placeholder="Añade un título"
-					labelPlacement="outside"
-					onChange={e => setTitle(e.target.value)}
-					defaultValue={recipe.title}
-					startContent={<FaUser size={20} color="#000" />}
-					radius="lg"
-					className="my-6"
-					isRequired
+				<FormFieldsEdit
+					title={title}
+					setTitle={setTitle}
+					category={category}
+					setCategory={setCategory}
+					description={description}
+					setDescription={setDescription}
 				/>
-				<Select
-					value={category.title}
-					defaultSelectedKeys={[category.title]}
-					label="Categoría"
-					placeholder="Selecciona tu categoría"
-					labelPlacement="outside"
-					onChange={e => {
-						const selectedCategory = List.find(
-							cat => cat.title === e.target.value
-						);
-						if (selectedCategory) {
-							setCategory(selectedCategory);
-						}
-					}}
-					startContent={<FaTag size={20} color="#000" />}
-					radius="lg"
-					className="my-6"
-					isRequired
-				>
-					{List.map(category => (
-						<SelectItem key={category.title} value={category.title}>
-							{category.title}
-						</SelectItem>
-					))}
-				</Select>
-				<Textarea
-					value={description}
-					onChange={e => setDescription(e.target.value)}
-					label="Description"
-					labelPlacement="outside"
-					placeholder="Descripción de la receta"
-					className="mb-6"
-					isRequired
-				/>
-				<label className="mb-2">
-					Foto:
-					<input
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						type="text"
-						name="photo"
-						defaultValue={recipe.photo}
-					/>
-				</label>
 
-				{recipe.ingredients.map((ingredient, index) => (
-					<div key={index} className="mb-2">
-						<label>
-							Ingredientes:
-							<input
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-								type="text"
-								name={`ingredient-name-${index}`}
-								defaultValue={ingredient.name}
-							/>
-						</label>
-						<label>
-							Cantidad:
-							<input
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-								type="text"
-								name={`ingredient-quantity-${index}`}
-								defaultValue={ingredient.quantity}
-							/>
-						</label>
-					</div>
-				))}
+				<IngredientsEdit
+					ingredients={ingredients}
+					handleIngredientChange={handleIngredientChange}
+					handleAddIngredient={handleAddIngredient}
+					handleRemoveIngredient={handleRemoveIngredient}
+					selectedIngredientIndex={selectedIngredientIndex}
+				/>
 				{recipe.steps.map((step, index) => (
 					<label key={index} className="mb-2">
 						Paso:
