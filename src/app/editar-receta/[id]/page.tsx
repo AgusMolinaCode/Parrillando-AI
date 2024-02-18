@@ -1,8 +1,11 @@
 "use client";
 
 import { RecetaId } from "@/libs/interfaces/RecetaId";
+import { List, Categoria } from "@/libs/interfaces/categorias";
+import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { FaTag, FaUser } from "react-icons/fa";
 
 const Page = () => {
 	const { id } = useParams();
@@ -10,12 +13,23 @@ const Page = () => {
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 	const [recipe, setRecipe] = useState<RecetaId | null>(null);
 	const [saving, setIsSaving] = useState(false);
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [category, setCategory] = useState<Categoria>(List[0]);
 
 	useEffect(() => {
 		fetch(`${apiUrl}recetas/${id}`)
 			.then(response => response.json())
-			.then(data => setRecipe(data));
-	});
+			.then(data => {
+				setRecipe(data);
+				setTitle(data.title);
+				setDescription(data.description);
+				const categoryData = List.find(cat => cat.title === data.category);
+				if (categoryData) {
+					setCategory(categoryData);
+				}
+			});
+	}, [apiUrl, id]);
 
 	if (!recipe) {
 		return <div>Cargando...</div>;
@@ -29,13 +43,10 @@ const Page = () => {
 		const form = event.currentTarget as HTMLFormElement;
 
 		const updatedRecipe = {
-			id: recipe.id,
-			title: (form.elements.namedItem("title") as HTMLInputElement)?.value,
-			category: (form["category"] as HTMLInputElement).value,
-			description: (form["description"] as HTMLTextAreaElement).value,
+			title: title,
+			category: category.title,
+			description: description,
 			photo: [(form["photo"] as HTMLInputElement).value],
-			authorId: recipe.authorId,
-			likesCount: recipe.likesCount,
 			ingredients: recipe.ingredients.map((ingredient, index) => ({
 				id: ingredient.id,
 				name: (form[`ingredient-name-${index}`] as HTMLInputElement).value,
@@ -68,33 +79,54 @@ const Page = () => {
 				className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col"
 				onSubmit={handleSubmit}
 			>
-				<h1 className="mb-4 text-xl font-bold">Editar receta {id}</h1>
-				<label className="mb-2">
-					Título:
-					<input
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						type="text"
-						name="title"
-						defaultValue={recipe.title}
-					/>
-				</label>
-				<label className="mb-2">
-					Categoría:
-					<input
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						type="text"
-						name="category"
-						defaultValue={recipe.category}
-					/>
-				</label>
-				<label className="mb-2">
-					Descripción:
-					<textarea
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						name="description"
-						defaultValue={recipe.description}
-					/>
-				</label>
+				<h1 className="mb-4 text-xl font-bold">Editar receta {recipe.title}</h1>
+
+				<Input
+					type="text"
+					label="Titulo"
+					placeholder="Añade un título"
+					labelPlacement="outside"
+					onChange={e => setTitle(e.target.value)}
+					defaultValue={recipe.title}
+					startContent={<FaUser size={20} color="#000" />}
+					radius="lg"
+					className="my-6"
+					isRequired
+				/>
+				<Select
+					value={category.title}
+					defaultSelectedKeys={[category.title]}
+					label="Categoría"
+					placeholder="Selecciona tu categoría"
+					labelPlacement="outside"
+					onChange={e => {
+						const selectedCategory = List.find(
+							cat => cat.title === e.target.value
+						);
+						if (selectedCategory) {
+							setCategory(selectedCategory);
+						}
+					}}
+					startContent={<FaTag size={20} color="#000" />}
+					radius="lg"
+					className="my-6"
+					isRequired
+				>
+					{List.map(category => (
+						<SelectItem key={category.title} value={category.title}>
+							{category.title}
+						</SelectItem>
+					))}
+				</Select>
+				<Textarea
+					value={description}
+					onChange={e => setDescription(e.target.value)}
+					label="Description"
+					labelPlacement="outside"
+					placeholder="Descripción de la receta"
+					className="mb-6"
+					isRequired
+				/>
 				<label className="mb-2">
 					Foto:
 					<input
@@ -104,6 +136,7 @@ const Page = () => {
 						defaultValue={recipe.photo}
 					/>
 				</label>
+
 				{recipe.ingredients.map((ingredient, index) => (
 					<div key={index} className="mb-2">
 						<label>

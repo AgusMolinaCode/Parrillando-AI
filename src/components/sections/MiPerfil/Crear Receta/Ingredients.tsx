@@ -43,7 +43,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 						type="text"
 						name="name"
 						id={`name${index}`}
-						value={ingredient.name}
+						defaultValue={ingredient.name}
 						onChange={event => handleIngredientChange(index, event)}
 						className="my-2"
 						radius="lg"
@@ -54,7 +54,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 						type="text"
 						name="quantity"
 						id={`quantity${index}`}
-						value={ingredient.quantity}
+						defaultValue={ingredient.quantity}
 						onChange={event => handleIngredientChange(index, event)}
 						className="pb-4"
 						radius="lg"

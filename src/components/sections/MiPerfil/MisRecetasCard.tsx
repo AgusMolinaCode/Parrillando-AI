@@ -49,8 +49,6 @@ export default async function MisRecetasCard() {
 		return text;
 	};
 
-	const description = matchingUserRecipes[0]?.description;
-
 	return (
 		<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
 			{matchingUserRecipes.length > 0 ? (
@@ -82,7 +80,7 @@ export default async function MisRecetasCard() {
 							</CardHeader>
 							<Divider />
 							<CardBody>
-								<p>{truncateText(description, 15)}</p>
+								<p>{truncateText(recipe.description, 15)}</p>
 							</CardBody>
 							<Divider />
 							<CardFooter>
