@@ -55,8 +55,14 @@ export async function PUT(request: Request, { params }: Params) {
       steps,
     } = await request.json();
 
-    // Primero, elimina todos los ingredientes de la receta
+    // Primero, elimina todos los ingredientes y pasos de la receta
     await prisma.ingredient.deleteMany({
+      where: {
+        recipeId: Number(params.id),
+      },
+    });
+
+    await prisma.step.deleteMany({
       where: {
         recipeId: Number(params.id),
       },
@@ -78,14 +84,8 @@ export async function PUT(request: Request, { params }: Params) {
           })),
         },
         steps: {
-          upsert: steps.map((step: Step) => ({
-            where: { id: step.id },
-            create: {
-              description: step.description,
-            },
-            update: {
-              description: step.description,
-            },
+          create: steps.map((step: Step) => ({
+            description: step.description,
           })),
         },
       },

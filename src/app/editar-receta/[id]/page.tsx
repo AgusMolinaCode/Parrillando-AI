@@ -2,12 +2,13 @@
 
 import FormFieldsEdit from "@/components/sections/MiPerfil/Editar Receta/FormFieldsEdit";
 import IngredientsEdit from "@/components/sections/MiPerfil/Editar Receta/IngredientsEdit";
+import StepsEdit from "@/components/sections/MiPerfil/Editar Receta/StepsEdit";
 import { RecetaId } from "@/libs/interfaces/RecetaId";
 import { List, Categoria } from "@/libs/interfaces/categorias";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { FaTag, FaUser } from "react-icons/fa";
+
 
 const Page = () => {
 	const { id } = useParams();
@@ -19,9 +20,7 @@ const Page = () => {
 	const [description, setDescription] = useState("");
 	const [category, setCategory] = useState<Categoria>(List[0]);
 	const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
-	const [selectedIngredientIndex, setSelectedIngredientIndex] = useState<
-		number | null
-	>(null);
+	const [steps, setSteps] = useState([{ description: "" }]);
 
 	useEffect(() => {
 		fetch(`${apiUrl}recetas/${id}`)
@@ -35,6 +34,7 @@ const Page = () => {
 					setCategory(categoryData);
 				}
 				setIngredients(data.ingredients);
+				setSteps(data.steps);
 			});
 	}, [apiUrl, id]);
 
@@ -45,10 +45,6 @@ const Page = () => {
 			</div>
 		);
 	}
-
-	const handleAddIngredient = () => {
-		setIngredients([...ingredients, { name: "", quantity: "" }]);
-	};
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
@@ -69,16 +65,19 @@ const Page = () => {
 			};
 		});
 
+		const updatedSteps = steps.map((step, index) => {
+			const stepInput = form[`step-${index}`] as HTMLTextAreaElement;
+			return {
+				description: stepInput ? stepInput.value : "",
+			};
+		});
+
 		const updatedRecipe = {
 			title: title,
 			category: category.title,
 			description: description,
 			ingredients: updatedIngredients,
-			steps: recipe.steps.map((step, index) => ({
-				id: step.id,
-				description: (form[`step-${index}`] as HTMLTextAreaElement).value,
-				recipeId: recipe.id,
-			})),
+			steps: updatedSteps,
 		};
 
 		await fetch(`${apiUrl}recetas/${id}`, {
@@ -106,14 +105,37 @@ const Page = () => {
 		setIngredients(values);
 	};
 
+	const handleAddIngredient = () => {
+		setIngredients([...ingredients, { name: "", quantity: "" }]);
+	};
+
 	const handleRemoveIngredient = (index: number) => {
 		const newIngredients = [...ingredients];
 		newIngredients.splice(index, 1);
 		setIngredients(newIngredients);
 	};
 
+	const handleStepChange = (
+		index: number,
+		event: React.ChangeEvent<HTMLTextAreaElement>
+	) => {
+		const newSteps = [...steps];
+		newSteps[index].description = event.target.value;
+		setSteps(newSteps);
+	};
+
+	const handleAddStep = () => {
+		setSteps([...steps, { description: "" }]);
+	};
+
+	const handleRemoveStep = () => {
+		const newSteps = [...steps];
+		newSteps.pop();
+		setSteps(newSteps);
+	};
+
 	return (
-		<div className="sm:flex sm:justify-center px-2 items-center min-h-screen bg-gray-100">
+		<div className="flex justify-center items-center min-h-screen bg-gray-100">
 			<form
 				className="bg-white shadow-md rounded px-2 mt-6 mb-8 p-4 flex flex-col sm:w-[600px] "
 				onSubmit={handleSubmit}
@@ -133,18 +155,22 @@ const Page = () => {
 					handleIngredientChange={handleIngredientChange}
 					handleAddIngredient={handleAddIngredient}
 					handleRemoveIngredient={handleRemoveIngredient}
-					selectedIngredientIndex={selectedIngredientIndex}
 				/>
-				{recipe.steps.map((step, index) => (
-					<label key={index} className="mb-2">
-						Paso:
-						<textarea
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-							name={`step-${index}`}
-							defaultValue={step.description}
-						/>
-					</label>
-				))}
+				<StepsEdit
+					steps={steps}
+					handleStepChange={handleStepChange}
+					handleAddStep={handleAddStep}
+					handleRemoveStep={handleRemoveStep}
+				/>
+				{/* {recipe.steps.map((step, index) => (
+					<Textarea
+						key={index}
+						className=""
+						name={`step-${index}`}
+						defaultValue={step.description}
+					/>
+				))} */}
+				<div className="flex justify-center mx-auto"></div>
 				<button
 					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 					type="submit"
