@@ -4,11 +4,11 @@ import FormFieldsEdit from "@/components/sections/MiPerfil/Editar Receta/FormFie
 import IngredientsEdit from "@/components/sections/MiPerfil/Editar Receta/IngredientsEdit";
 import StepsEdit from "@/components/sections/MiPerfil/Editar Receta/StepsEdit";
 import { RecetaId } from "@/libs/interfaces/RecetaId";
+import { Step } from "@/libs/interfaces/Steps";
 import { List, Categoria } from "@/libs/interfaces/categorias";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-
 
 const Page = () => {
 	const { id } = useParams();
@@ -20,7 +20,7 @@ const Page = () => {
 	const [description, setDescription] = useState("");
 	const [category, setCategory] = useState<Categoria>(List[0]);
 	const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
-	const [steps, setSteps] = useState([{ description: "" }]);
+	const [steps, setSteps] = useState<Step[]>([]);
 
 	useEffect(() => {
 		fetch(`${apiUrl}recetas/${id}`)
@@ -69,6 +69,7 @@ const Page = () => {
 			const stepInput = form[`step-${index}`] as HTMLTextAreaElement;
 			return {
 				description: stepInput ? stepInput.value : "",
+				recipeId: recipe.id,
 			};
 		});
 
@@ -115,27 +116,16 @@ const Page = () => {
 		setIngredients(newIngredients);
 	};
 
-	const handleStepChange = (
-		index: number,
-		event: React.ChangeEvent<HTMLTextAreaElement>
-	) => {
-		const newSteps = [...steps];
-		newSteps[index].description = event.target.value;
-		setSteps(newSteps);
-	};
-
 	const handleAddStep = () => {
-		setSteps([...steps, { description: "" }]);
+		setSteps([...steps, { description: "", recipeId: recipe.id }]);
 	};
 
-	const handleRemoveStep = () => {
-		const newSteps = [...steps];
-		newSteps.pop();
-		setSteps(newSteps);
+	const handleRemoveStep = (id: number) => {
+		setSteps(prevSteps => prevSteps.filter(step => step.id !== id));
 	};
 
 	return (
-		<div className="flex justify-center items-center min-h-screen bg-gray-100">
+		<div className="sm:flex sm:justify-center sm:items-center px-2 bg-gray-100">
 			<form
 				className="bg-white shadow-md rounded px-2 mt-6 mb-8 p-4 flex flex-col sm:w-[600px] "
 				onSubmit={handleSubmit}
@@ -156,21 +146,36 @@ const Page = () => {
 					handleAddIngredient={handleAddIngredient}
 					handleRemoveIngredient={handleRemoveIngredient}
 				/>
-				<StepsEdit
-					steps={steps}
-					handleStepChange={handleStepChange}
-					handleAddStep={handleAddStep}
-					handleRemoveStep={handleRemoveStep}
-				/>
-				{/* {recipe.steps.map((step, index) => (
-					<Textarea
-						key={index}
-						className=""
-						name={`step-${index}`}
-						defaultValue={step.description}
-					/>
-				))} */}
-				<div className="flex justify-center mx-auto"></div>
+
+				{steps.map((step, index) => (
+					<div key={index}>
+						<Textarea
+							className=""
+							label={`Paso ${index + 1}`}
+							labelPlacement="outside"
+							name={`step-${index}`}
+							defaultValue={step.description}
+						/>
+					</div>
+				))}
+				<div className="flex justify-center mx-auto gap-2">
+					<button
+						className="text-blue-700 bg-transparent text-sm sm:text-md"
+						type="button"
+						onClick={handleAddStep}
+					>
+						Añadir paso
+					</button>
+					<button
+						type="button"
+						className="text-sm sm:text-md  rounded-xl p-1 text-red-600"
+						onClick={() => {
+							setSteps(prevSteps => prevSteps.slice(0, -1));
+						}}
+					>
+						Eliminar
+					</button>
+				</div>
 				<button
 					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 					type="submit"

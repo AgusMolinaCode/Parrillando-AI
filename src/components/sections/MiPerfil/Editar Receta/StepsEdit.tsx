@@ -6,20 +6,17 @@ interface Step {
 }
 
 interface StepsEditProps {
-	steps: Step[];
+	steps: { description: string }[];
+	setSteps: React.Dispatch<React.SetStateAction<{ description: string }[]>>;
 	handleAddStep: () => void;
 	handleRemoveStep: () => void;
-	handleStepChange: (
-		index: number,
-		event: React.ChangeEvent<HTMLTextAreaElement>
-	) => void;
 }
 
 const StepsEdit: React.FC<StepsEditProps> = ({
 	steps,
 	handleAddStep,
 	handleRemoveStep,
-	handleStepChange,
+	setSteps,
 }) => {
 	return (
 		<div className="max-w-lg flex flex-col justify-center mx-auto px-2">
@@ -30,7 +27,11 @@ const StepsEdit: React.FC<StepsEditProps> = ({
 						name={`step-description-${index}`}
 						id={`description${index}`}
 						value={step.description}
-						onChange={event => handleStepChange(index, event)}
+						onChange={e => {
+							const newSteps = [...steps];
+							newSteps[index].description = e.target.value;
+							setSteps(newSteps);
+						}}
 						className="my-2"
 						required
 					/>

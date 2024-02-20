@@ -1,17 +1,16 @@
 // IngredientsEdit.tsx
-import React from 'react';
-import { Button, Input } from '@nextui-org/react';
-
-interface Ingredient {
-    name: string;
-    quantity: string;
-}
+import React from "react";
+import { Button, Input } from "@nextui-org/react";
+import { Ingredient } from "@/libs/interfaces/Ingredient";
 
 interface IngredientsEditProps {
-    ingredients: Ingredient[];
-    handleIngredientChange: (index: number, event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleAddIngredient: () => void;
-    handleRemoveIngredient: (index: number) => void;
+	ingredients: Ingredient[];
+	handleIngredientChange: (
+		index: number,
+		event: React.ChangeEvent<HTMLInputElement>
+	) => void;
+	handleAddIngredient: () => void;
+	handleRemoveIngredient: (index: number) => void;
 }
 
 const IngredientsEdit: React.FC<IngredientsEditProps> = ({
@@ -22,7 +21,7 @@ const IngredientsEdit: React.FC<IngredientsEditProps> = ({
 }) => (
 	<>
 		{ingredients.map((ingredient, index) => (
-			<div key={index} className='relative'>
+			<div key={index} className="relative">
 				<Input
 					label={`Ingrediente ${index + 1}`}
 					labelPlacement="outside"
@@ -51,24 +50,24 @@ const IngredientsEdit: React.FC<IngredientsEditProps> = ({
 					}}
 					isRequired
 				/>
-				<button
-					type="button"
-					color="danger"
-					onClick={() => handleRemoveIngredient(index)}
-					className="text-sm sm:text-md  rounded-xl p-1 text-red-600"
-				>
-					Eliminar
-				</button>
 			</div>
 		))}
-		<div className="flex justify-center mx-auto">
-			<Button
+		<div className="flex justify-center mx-auto gap-2">
+			<button
 				type="button"
 				className="text-blue-700 bg-transparent text-sm sm:text-md"
 				onClick={handleAddIngredient}
 			>
 				Añadir ingrediente
-			</Button>
+			</button>
+			<button
+				type="button"
+				color="danger"
+				onClick={() => handleRemoveIngredient(ingredients.length - 1)}
+				className="text-sm sm:text-md  rounded-xl p-1 text-red-600"
+			>
+				Eliminar
+			</button>
 		</div>
 	</>
 );
