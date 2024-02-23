@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+    ],
+    "settings": {
+        "explorer.fileNesting.expand": true,
+        "explorer.expandSingleFolderWorkspaces": true,
+        "explorer.compactFolders": false,
+        "chat.editor.fontWeight": "600",
+        "terminal.integrated.fontWeight": "600",
+        "debug.console.fontFamily": "'Monaspace Neon', monospace",
+        "terminal.integrated.fontFamily": "monospace",
+        "chat.editor.fontFamily": "'Monaspace Neon', monospace",
+        "notebook.output.fontFamily": "'Monaspace Neon', monospace"
+    }
+}

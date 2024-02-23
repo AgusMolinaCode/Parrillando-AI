@@ -9,10 +9,8 @@ export default function Home() {
   return (
     <div>
       <Hero />
-
       <MejoresRecetas />
       <RecetasNuevas />
-
       <Categorias />
       <GastronomiaMain />
     </div>

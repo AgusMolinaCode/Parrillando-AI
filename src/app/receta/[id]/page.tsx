@@ -35,9 +35,12 @@ const page = async ({ params }: Props) => {
 
   if (!receta.id) {
     return (
-      <div className="text-2xl sm:text-4xl text-center text-black min-h-screen flex flex-col justify-center items-center">
+      <div className="text-2xl sm:text-4xl  text-center text-black min-h-screen flex flex-col justify-center items-center">
         Receta no encontrada
-        <Link href="/" className="text-orange-100 bg-black flex items-center rounded-xl mt-10 hover:shadow-2xl duration-500">
+        <Link
+          href="/"
+          className="text-orange-100 bg-black flex items-center rounded-xl mt-10 hover:shadow-2xl duration-500"
+        >
           <Button className="bg-black text-white text-lg">
             Volver al inicio
           </Button>
