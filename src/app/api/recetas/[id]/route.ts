@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
-import { Prisma } from "@prisma/client";
 import { Ingredient } from "@/libs/interfaces/Ingredient";
 import { Step } from "@/libs/interfaces/Steps";
 
