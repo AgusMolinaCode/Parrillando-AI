@@ -1,6 +1,6 @@
 export async function getAuthorId(userId: string | null): Promise<string | null> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${apiUrl}users`);
+  const response = await fetch(`${apiUrl}/users`);
   const users = await response.json();
 
   // Obtén el clerkId del usuario actual

@@ -7,7 +7,7 @@ const lobster = Lobster({ weight: "400", preload: false });
 
 async function getRecetas(): Promise<Receta[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${apiUrl}recetas`);
+  const response = await fetch(`${apiUrl}/recetas`);
   const recetas = await response.json();
   return recetas;
 }

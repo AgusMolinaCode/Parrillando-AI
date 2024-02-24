@@ -56,7 +56,7 @@ const page = () => {
 			})),
 		};
 
-		const response = await fetch(`${apiUrl}recetas`, {
+		const response = await fetch(`${apiUrl}/recetas`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

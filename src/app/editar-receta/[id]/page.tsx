@@ -33,13 +33,13 @@ const Page = () => {
   const { userId } = useAuth();
 
   useEffect(() => {
-    fetch(`${apiUrl}users`)
+    fetch(`${apiUrl}/users`)
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, [apiUrl]);
 
   useEffect(() => {
-    fetch(`${apiUrl}recetas/${id}`)
+    fetch(`${apiUrl}/recetas/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setRecipe(data);
@@ -112,7 +112,7 @@ const Page = () => {
       steps: updatedSteps,
     };
 
-    await fetch(`${apiUrl}recetas/${id}`, {
+    await fetch(`${apiUrl}/recetas/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

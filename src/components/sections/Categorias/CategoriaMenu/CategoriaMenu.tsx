@@ -16,7 +16,7 @@ const CategoriaMenu = ({ nombreCategoria }: CategoriaMenuProps) => {
 
 	useEffect(() => {
 		const getRecetas = async () => {
-			const response = await fetch(`${apiUrl}recetas`);
+			const response = await fetch(`${apiUrl}/recetas`);
 			const recetasData = await response.json();
 			const recetasCategoria = recetasData.filter(
 				(receta: RecetaId) => receta.category === nombreCategoria

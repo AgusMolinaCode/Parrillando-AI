@@ -5,7 +5,6 @@ import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 import React from "react";
 import RestaurantModal from "./RestaurantModal";
 import Mapas from "./Mapas";
-import GastronomiaSelect from "./RestaurantFilters/GastronomiaSelect";
 import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 
 interface RestaurantGridProps {
@@ -44,7 +43,6 @@ const RestaurantGrid = ({ restaurants }: RestaurantGridProps) => {
 
   return (
     <div>
-      <GastronomiaSelect />
       <div className="max-w-[1500px] flex justify-center mx-auto mt-5 gap-2 flex-wrap">
         <div className="grid md:grid-cols-2 xl:grid-cols-1 xl:overflow-y-auto xl:h-[600px] mb-10">
           {restaurants.map((dato, index) => (

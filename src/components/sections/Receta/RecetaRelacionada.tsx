@@ -22,7 +22,7 @@ const RecetaRelacionada = ({ receta }: Props) => {
     const obtenerRecetasRelacionadas = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${apiUrl}recetas`);
+        const response = await fetch(`${apiUrl}/recetas`);
         const recetas = await response.json();
         const recetasFiltradas = recetas.filter(
           (item: { category: string; id: number; }) => item.category === receta.category && item.id !== receta.id

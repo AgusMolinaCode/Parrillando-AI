@@ -17,14 +17,14 @@ import Link from "next/link";
 
 async function getUser(): Promise<User[]> {
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-	const response = await fetch(`${apiUrl}users`);
+	const response = await fetch(`${apiUrl}/users`);
 	const users = await response.json();
 	return users;
 }
 
 async function getUserRecipes(): Promise<Receta[]> {
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-	const response = await fetch(`${apiUrl}recetas`);
+	const response = await fetch(`${apiUrl}/recetas`);
 	const users = await response.json();
 	return users;
 }
@@ -100,7 +100,7 @@ export default async function MisRecetasCard() {
 									</Link>
 									<DeleteButton
 										id={recipe?.id.toString()}
-										url={`${apiUrl}recetas`}
+										url={`${apiUrl}/recetas`}
 									/>
 								</ButtonGroup>
 							</CardFooter>

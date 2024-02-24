@@ -16,14 +16,14 @@ import DeleteButton from "./DeleteButton";
 
 async function getUser(): Promise<User[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${apiUrl}users`);
+  const response = await fetch(`${apiUrl}/users`);
   const users = await response.json();
   return users;
 }
 
 async function getUserRestaurants(): Promise<Gastronomia[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${apiUrl}gastronomia`);
+  const response = await fetch(`${apiUrl}/gastronomia`);
   const users = await response.json();
   return users;
 }
@@ -82,7 +82,7 @@ const MisRestaurantesCard = async () => {
 							<CardFooter>
 								<DeleteButton
 									id={item?.id.toString()}
-									url={`${apiUrl}gastronomia`}
+									url={`${apiUrl}/gastronomia`}
 								/>
 							</CardFooter>
 						</div>

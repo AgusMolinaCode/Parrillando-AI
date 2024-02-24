@@ -17,7 +17,7 @@ const MiPerfilHome = () => {
       <MiPerfilSelect
         titulo="Mis Restaurantes"
         textoBotonCrear="Crear Restaurant"
-        BotonPage="crear-restaurante"
+        BotonPage="crear-restaurant"
       />
       <div className="pt-8 pb-8 px-2">
         <MisRestaurantesCard />
