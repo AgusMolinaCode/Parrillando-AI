@@ -51,11 +51,11 @@ const Steps = ({ steps, setSteps }: Props) => {
 					/>
 				</div>
 			))}
-			<div className="flex justify-center mx-auto gap-2 flex-wrap mt-4">
-				<Button type="button" color="primary" onClick={handleAddStep}>
+			<div className="flex justify-center mx-auto gap-2 flex-wrap">
+				<Button type="button" className="text-blue-700 bg-transparent text-md" onClick={handleAddStep}>
 					Añadir paso
 				</Button>
-				<Button type="button" color="danger" onClick={handleRemoveStep}>
+				<Button type="button"className="text-red-700 bg-transparent text-md" onClick={handleRemoveStep}>
 					Eliminar paso
 				</Button>
 			</div>

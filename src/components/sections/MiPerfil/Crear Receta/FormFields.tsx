@@ -71,7 +71,7 @@ const FormFields = ({
 				className="mb-6"
 				isRequired
 			/>
-			<Input
+			{/* <Input
 				type="file"
 				value={photo}
 				onChange={e => setPhoto(e.target.value)}
@@ -84,7 +84,7 @@ const FormFields = ({
 					input: "p-2",
 				}}
 				isRequired
-			/>
+			/> */}
 		</>
 	);
 };

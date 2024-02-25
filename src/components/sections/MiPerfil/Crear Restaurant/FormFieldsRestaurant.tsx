@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Textarea } from "@nextui-org/react";
+import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import {
   FaUser,
   FaTag,
@@ -9,6 +9,7 @@ import {
   FaMoneyBillWave,
   FaMapPin,
 } from "react-icons/fa";
+import { List } from "@/libs/interfaces/categorias";
 
 interface Props {
   title: string;
@@ -86,7 +87,7 @@ const FormFieldsRestaurant = ({
         className="mb-6"
         isRequired
       />
-      <Input
+      {/* <Input
         type="file"
         value={photo}
         onChange={(e) => setPhoto(e.target.value)}
@@ -99,9 +100,8 @@ const FormFieldsRestaurant = ({
           input: "p-2",
         }}
         isRequired
-      />
-      <Input
-        type="text"
+      /> */}
+      <Select
         label="Precio"
         placeholder="Precio"
         labelPlacement="outside"
@@ -111,9 +111,21 @@ const FormFieldsRestaurant = ({
         radius="lg"
         className="my-6"
         isRequired
-      />
-      <Input
-        type="text"
+      >
+        <SelectItem key={1} value="$">
+          $
+        </SelectItem>
+        <SelectItem key={2} value="$$">
+          $$
+        </SelectItem>
+        <SelectItem key={3} value="$$$">
+          $$$
+        </SelectItem>
+        <SelectItem key={4} value="$$$$">
+          $$$$
+        </SelectItem>
+      </Select>
+      <Select
         label="Tipo de comida"
         placeholder="Tipo de comida"
         labelPlacement="outside"
@@ -123,7 +135,13 @@ const FormFieldsRestaurant = ({
         radius="lg"
         className="my-6"
         isRequired
-      />
+      >
+        {List.map((category) => (
+          <SelectItem key={category.id} value={category.id}>
+            {category.title}
+          </SelectItem>
+        ))}
+      </Select>
       <Input
         type="text"
         label="Provincia"

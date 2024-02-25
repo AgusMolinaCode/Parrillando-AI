@@ -72,14 +72,12 @@ const Page = () => {
       return;
     }
 
-     if (recipe.authorId !== user.id) {
-       notifyError();
-       router.push(`/perfil`);
-       return;
-     }
+    if (recipe.authorId !== user.id) {
+      notifyError();
+      router.push(`/perfil`);
+      return;
+    }
 
-     console.log("user", user.id);
-     console.log("recipe", recipe.authorId);
     setIsSaving(true);
 
     const form = event.currentTarget as HTMLFormElement;
@@ -164,7 +162,7 @@ const Page = () => {
         onSubmit={handleSubmit}
       >
         <h1 className="mb-4 text-xl font-bold">Editar receta {recipe.title}</h1>
-        <p>{recipe.authorId}</p>
+
         <FormFieldsEdit
           title={title}
           setTitle={setTitle}

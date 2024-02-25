@@ -74,7 +74,9 @@ const RestaurantGrid = ({ restaurants }: RestaurantGridProps) => {
                   <div>
                     <p className="text-gray-200 text-sm font-bold">
                       {dato.foodType} -{" "}
-                      <span className="text-yellow-300">{dato.price}</span>
+                      <span className="text-yellow-300">
+                        {"$".repeat(Number(dato.price))}
+                      </span>
                     </p>
                     <p className="text-gray-100 text-md font-bold">
                       {dato.whatsapp}

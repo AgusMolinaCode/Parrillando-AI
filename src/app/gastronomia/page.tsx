@@ -5,6 +5,7 @@ import { Gastronomia } from "@/libs/interfaces/Gastronomia";
 async function getRestaurants(): Promise<Gastronomia[]> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gastronomia`);
   const restaurants = await response.json();
+  console.log(restaurants);
   return restaurants;
 }
 

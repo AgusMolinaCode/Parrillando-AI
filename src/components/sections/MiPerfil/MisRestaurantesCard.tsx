@@ -9,6 +9,7 @@ import {
   Image,
   ButtonGroup,
   Button,
+  Link,
 } from "@nextui-org/react";
 import { User } from "@/libs/interfaces/User";
 import { Gastronomia } from "@/libs/interfaces/Gastronomia";
@@ -50,53 +51,68 @@ const MisRestaurantesCard = async () => {
 
   const description = matchingUserRestaurants[0]?.description;
   return (
-		<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
-			{matchingUserRestaurants.length > 0 ? (
-				matchingUserRestaurants.map(item => (
-					<Card className="max-w-[400px]" key={item?.id}>
-						<div className="">
-							<CardHeader className="flex gap-3">
-								<Image
-									alt={item?.title}
-									height={60}
-									radius="sm"
-									src={
-										item?.photo.length > 0 && item?.photo[0].startsWith("https")
-											? item?.photo[0]
-											: "/not-found.png"
-									}
-									width={60}
-								/>
-								<div className="flex flex-col">
-									<p className="text-md">{item?.title}</p>
-									<p className="text-small text-default-500">
-										{item.direction}
-									</p>
-								</div>
-							</CardHeader>
-							<Divider />
-							<CardBody>
-								<p>{truncateText(description, 15)}</p>
-							</CardBody>
-							<Divider />
-							<CardFooter>
-								<DeleteButton
-									id={item?.id.toString()}
-									url={`${apiUrl}/gastronomia`}
-								/>
-							</CardFooter>
-						</div>
-					</Card>
-				))
-			) : (
-				<div className="flex justify-center items-center mx-auto">
-					<p className="font-bold text-4xl text-center mx-auto flex justify-center">
-						No hay recetas disponibles
-					</p>
-				</div>
-			)}
-		</div>
-	);
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+      {matchingUserRestaurants.length > 0 ? (
+        matchingUserRestaurants.map((item) => (
+          <Card className="max-w-[400px]" key={item?.id}>
+            <div className="">
+              <CardHeader className="flex gap-3">
+                <Image
+                  alt={item?.title}
+                  height={60}
+                  radius="sm"
+                  src={
+                    item?.photo.length > 0 && item?.photo[0].startsWith("https")
+                      ? item?.photo[0]
+                      : "/not-found.png"
+                  }
+                  width={60}
+                />
+                <div className="flex flex-col">
+                  <p className="text-md">{item?.title}</p>
+                  <p className="text-small text-default-500">
+                    {item.direction}
+                  </p>
+                </div>
+              </CardHeader>
+              <Divider />
+              <CardBody>
+                <p>{truncateText(description, 15)}</p>
+              </CardBody>
+              <Divider />
+              <CardFooter>
+                <ButtonGroup>
+                  <Link
+                    className="rounded-l-lg rounded-r-none"
+                    href={`/editar-restaurant/${item?.id}`}
+                  >
+                    <Button
+                      color="primary"
+                      variant="light"
+                      className="rounded-l-lg rounded-r-none"
+                      size="md"
+                    >
+                      Editar
+                    </Button>
+                  </Link>
+                  <DeleteButton
+                    id={item?.id.toString()}
+                    url={`${apiUrl}/gastronomia`}
+                  />
+                </ButtonGroup>
+              </CardFooter>
+            </div>
+          </Card>
+        ))
+      ) : (
+        <div className="flex justify-center items-center mx-auto">
+          <p className="font-bold text-4xl text-center mx-auto flex justify-center">
+            No hay recetas disponibles
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default MisRestaurantesCard;
