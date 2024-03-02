@@ -12,15 +12,17 @@ interface RestaurantGridProps {
 }
 
 const RestaurantGrid = ({ restaurants }: RestaurantGridProps) => {
-  const [selectedCoordinates, setSelectedCoordinates] = useState<
-    [number, number] | null
-  >(null);
-  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
-  const [selectedCode, setSelectedCode] = useState<string | null>(null);
-  const [selectedDirection, setSelectedDirection] = useState<string | null>(
-    null
-  );
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  if (restaurants.length === 0) {
+    throw new Error("No hay restaurantes disponibles");
+  }
+
+  const firstRestaurant = restaurants[0];
+
+  const [selectedCoordinates, setSelectedCoordinates] = useState< [number, number] | null >([firstRestaurant.lng, firstRestaurant.lat]);
+  const [selectedTitle, setSelectedTitle] = useState<string | null>(firstRestaurant.title);
+  const [selectedCode, setSelectedCode] = useState<string | null>(firstRestaurant.zipCode);
+  const [selectedDirection, setSelectedDirection] = useState<string | null>(firstRestaurant.direction);
+  const [selectedCity, setSelectedCity] = useState<string | null>(firstRestaurant.city);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleComoLlegarClick = (

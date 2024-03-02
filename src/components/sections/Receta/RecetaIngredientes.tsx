@@ -18,7 +18,7 @@ const RecetaIngredientes = ({ receta }: Props) => {
 
 	return (
 		<div className="flex flex-wrap justify-center mx-auto gap-5">
-			<div>
+			<div className="max-w-[600px]">
 				{category && (
 					<Link
 						href={`/categorias/${formattedCategory}`}
@@ -31,7 +31,7 @@ const RecetaIngredientes = ({ receta }: Props) => {
 				<h1 className="text-4xl sm:text-5xl font-normal py-3">
 					{receta.title}
 				</h1>
-				<h2 className="max-w-[500px] mt-5">{receta.description}</h2>
+				{/* <h2 className="max-w-[500px] mt-5">{receta.description}</h2> */}
 				<h2 className="text-lg sm:text-xl font-semibold pt-5 underline">
 					INGREDIENTES:
 				</h2>

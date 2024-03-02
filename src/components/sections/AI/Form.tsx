@@ -9,7 +9,7 @@ const Form = () => {
   const [copied, setCopied] = useState("");
   const [isComplete, setIsComplete] = useState(false); // Bandera para indicar si la respuesta está completa
   const { complete, completion, isLoading, stop } = useCompletion({
-    api: "https://parrillando-ai-production.up.railway.app/api/completion",
+    api: "/api/completion",
     onFinish: (completion) => {
       setIsComplete(true); // Establecer la bandera como verdadera cuando la respuesta está completa
     }

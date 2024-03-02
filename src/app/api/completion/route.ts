@@ -23,10 +23,10 @@ export async function POST(req: Request) {
     messages: [
       {
         role: "user",
-        content: `Crea una receta tipica de Argentina con los ingredientes recibidos. empieza con una breve descripcion de la receta a realizar. luego dame 4 o 7 pasos para realizar la receta, y por ultimo como servirlo ${prompt}`,
+        content: `Crea una receta tipica de Argentina con los ingredientes recibidos. empieza con una breve descripcion de la receta a realizar. luego dame 3 o 4 pasos para realizar la receta, y por ultimo como servirlo ${prompt}`,
       },
     ],
-    max_tokens: 700,
+    max_tokens: 320,
     temperature: 0, // you want absolute certainty for spell check
     top_p: 1,
     frequency_penalty: 1,

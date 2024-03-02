@@ -49,6 +49,7 @@ export async function PUT(request: Request, { params }: Params) {
       title,
       category,
       description,
+	  photo,
       likesCount,
       ingredients,
       steps,
@@ -76,6 +77,7 @@ export async function PUT(request: Request, { params }: Params) {
         category,
         description,
         likesCount,
+		photo,
         ingredients: {
           create: ingredients.map((ingredient: Ingredient) => ({
             name: ingredient.name,

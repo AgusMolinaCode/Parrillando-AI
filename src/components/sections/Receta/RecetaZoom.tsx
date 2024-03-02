@@ -17,6 +17,8 @@ interface Props {
 }
 
 const RecetaZoom = ({ receta }: Props) => {
+
+  console.log(receta);
   return (
     <div className="max-w-[450px]">
       <div>
