@@ -1,6 +1,6 @@
 # Parrillando
 
-## Proyecto creado con Next.js 14, PostgreSQL, Tailwind, Prisma y Open AI
+## Proyecto creado con Next.js 14, PostgreSQL, Typescript, Tailwind, Prisma y Open AI
 
 ### Parrillando es un sitio para compartir tus recetas favoritas, tambien puedes recomendar lugares para ir a comer y por ultimos puedes crear tus recetas favoritas con IA.
 
