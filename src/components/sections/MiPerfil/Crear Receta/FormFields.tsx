@@ -72,20 +72,6 @@ const FormFields = ({
         className="mb-6"
         isRequired
       />
-      {/* <Input
-        type="file"
-        value={photo}
-        onChange={(e) => setPhoto(e.target.value)}
-		onClick={() => open()}
-        placeholder="URL de la foto"
-        label="Foto"
-        labelPlacement="outside"
-        className="mb-6"
-        classNames={{
-          input: "p-2",
-        }}
-        isRequired
-      /> */}
       <CldUploadWidget
         options={{
           maxFiles: 1,

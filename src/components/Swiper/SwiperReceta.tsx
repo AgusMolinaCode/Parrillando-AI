@@ -82,7 +82,7 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
                           ? `${item.title.slice(0, 20)}...`
                           : item.title}
                       </p>
-                      {item.likesCount > 0 ? (
+                      {/* {item.likesCount > 0 ? (
                         <div className="flex items-center gap-2">
                           <AiFillStar className="text-yellow-400" />
                           <p className="font-bold text-gray-200">
@@ -94,7 +94,7 @@ const SwiperReceta = ({ recetas, tipo }: SwiperRecetaProps) => {
                           <AiFillStar className="text-yellow-400" />
                           <p className="font-bold text-gray-200">0 votos</p>
                         </div>
-                      )}
+                      )} */}
                     </div>
                     <Link
                       className="text-sm bg-orange-100 border border-orange-500 p-2 rounded-xl hover:bg-orange-200 transition duration-300 ease-in-out"
