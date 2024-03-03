@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import {
   FaUser,
   FaTag,
@@ -10,6 +10,7 @@ import {
   FaMapPin,
 } from "react-icons/fa";
 import { List } from "@/libs/interfaces/categorias";
+import { CldUploadWidget } from "next-cloudinary";
 
 interface Props {
   title: string;
@@ -101,6 +102,29 @@ const FormFieldsRestaurant = ({
         }}
         isRequired
       /> */}
+      <CldUploadWidget
+        options={{
+          maxFiles: 1,
+          cropping: true,
+        }}
+        uploadPreset="parrillando"
+        onSuccess={(results) => {
+          if (results.info && typeof results.info !== "string") {
+            console.log(results.info.secure_url);
+            setPhoto(results.info.secure_url);
+          }
+        }}
+      >
+        {({ open }) => {
+          return (
+            <div className="mb-6 grid w-full">
+              <Button value={photo} onClick={() => open()}>
+                Subir Imagen
+              </Button>
+            </div>
+          );
+        }}
+      </CldUploadWidget>
       <Select
         label="Precio"
         placeholder="Precio"
